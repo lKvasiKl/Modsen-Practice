@@ -1,12 +1,18 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useEffect, useState } from "react";
+import { GoogleMap } from "@react-google-maps/api";
+import getCurrentPosition from "services/locationService";
 
 import styles from "./Map.module.scss";
-import { GoogleMap } from "@react-google-maps/api";
 
 type TMapOptions = google.maps.MapOptions;
 type TGoogleMap = google.maps.Map;
+type TLatLngLiterals = google.maps.LatLngLiteral;
 
 const Map = () => {
+  const [position, setPosition] = useState<TLatLngLiterals>({
+    lat: 40,
+    lng: 81,
+  });
   const mapRef = useRef<TGoogleMap>();
   const options = useMemo<TMapOptions>(
     () => ({
@@ -18,10 +24,19 @@ const Map = () => {
     mapRef.current = map;
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { lat, lng }: TLatLngLiterals = await getCurrentPosition();
+      setPosition({ lat, lng });
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <GoogleMap
       zoom={10}
-      center={{ lat: 43, lng: -80 }}
+      center={position}
       mapContainerClassName={styles.mapContainer}
       options={options}
       onLoad={onLoad}
