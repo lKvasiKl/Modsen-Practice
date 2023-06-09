@@ -1,16 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { IRequestParams } from "shared/types";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:9000",
-});
-
-interface RequestParams {
-  headers?: Record<string, string>;
-  method: "POST" | "GET";
-  url: string;
-  data?: any;
-  params?: Record<string, string>;
-}
+const axiosInstance = axios.create();
 
 const request = async ({
   headers = {},
@@ -18,7 +9,7 @@ const request = async ({
   url,
   data,
   params,
-}: RequestParams) => {
+}: IRequestParams) => {
   const options: AxiosRequestConfig = {
     headers,
     method,

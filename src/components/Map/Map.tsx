@@ -1,22 +1,33 @@
 import { useCallback, useMemo, useRef, useEffect, useState } from "react";
-import { GoogleMap } from "@react-google-maps/api";
+import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
+import { TGoogleMap, TGooglePlace, TLatLngLiterals } from "shared/types";
 import getCurrentPosition from "services/locationService";
+import markerIcon from "../../assets/icons/Marker.svg";
 
 import styles from "./Map.module.scss";
+import getPlaces from "services/placesServise";
 
 type TMapOptions = google.maps.MapOptions;
-type TGoogleMap = google.maps.Map;
-type TLatLngLiterals = google.maps.LatLngLiteral;
+
+const circleOptions = {
+  strokeWeight: 0,
+  fillColor: "#5E7BC733",
+};
 
 const Map = () => {
-  const [position, setPosition] = useState<TLatLngLiterals>({
-    lat: 40,
-    lng: 81,
-  });
+  const [position, setPosition] = useState<TLatLngLiterals>();
+  const [places, setPlaces] = useState<TGooglePlace[]>();
   const mapRef = useRef<TGoogleMap>();
   const options = useMemo<TMapOptions>(
     () => ({
       disableDefaultUI: true,
+      styles: [
+        {
+          featureType: "poi",
+          elementType: "labels",
+          stylers: [{ visibility: "off" }],
+        },
+      ],
     }),
     []
   );
@@ -26,8 +37,11 @@ const Map = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { lat, lng }: TLatLngLiterals = await getCurrentPosition();
+      const { lat, lng } = await getCurrentPosition();
+      const places = await getPlaces({ lat, lng }, 5000);
+
       setPosition({ lat, lng });
+      setPlaces(places);
     };
 
     fetchData();
@@ -35,12 +49,23 @@ const Map = () => {
 
   return (
     <GoogleMap
-      zoom={10}
+      zoom={15}
       center={position}
       mapContainerClassName={styles.mapContainer}
       options={options}
       onLoad={onLoad}
-    ></GoogleMap>
+    >
+      {position && (
+        <>
+          <Marker position={position} icon={markerIcon} />
+          <Circle center={position} radius={200} options={circleOptions} />
+
+          {places?.map((place) => (
+            <Marker position={place.geometry?.location} icon={place?.icon} />
+          ))}
+        </>
+      )}
+    </GoogleMap>
   );
 };
 

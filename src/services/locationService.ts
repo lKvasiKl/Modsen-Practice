@@ -1,11 +1,26 @@
-const getCurrentPosition = (): Promise<google.maps.LatLngLiteral> => {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      resolve({ lat: latitude, lng: longitude });
-    }, reject);
-  });
+import { IRequestParams, TLatLngLiterals } from "shared/types";
+import { request } from "./axiosService";
+
+const getCurrentPosition = async (): Promise<TLatLngLiterals> => {
+  const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+  const url = process.env.REACT_APP_GOOGLE_GEOLOCATION_URL;
+
+  const options: IRequestParams = {
+    method: "POST",
+    url: `${url}`,
+    params: {
+      key: `${apiKey}`,
+    },
+  };
+
+  try {
+    const response = await request(options);
+    const { lat, lng } = response.location;
+
+    return { lat, lng };
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default getCurrentPosition;
