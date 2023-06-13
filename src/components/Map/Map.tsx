@@ -11,13 +11,19 @@ import {
 import PlaceMarkers from "components/PlaceMarkers/PlaceMarkers";
 import getCurrentPosition from "services/locationService";
 import getPlaces from "services/placesServise";
+import useInterval from "hooks/useInterval";
 import markerIcon from "../../assets/icons/marker.svg";
 
 import styles from "./Map.module.scss";
 
 const Map = () => {
-  const [position, setPosition] = useState<TLatLngLiterals>();
+  const [position, setPosition] = useState<TLatLngLiterals>({
+    lat: 48,
+    lng: -23,
+  });
   const [places, setPlaces] = useState<TGooglePlace[]>([]);
+  const [pageToken, setPageToken] = useState<string | undefined>(undefined);
+
   const mapRef = useRef<TGoogleMap>();
   const onLoad = useCallback((map: TGoogleMap) => {
     mapRef.current = map;
@@ -26,14 +32,23 @@ const Map = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { lat, lng } = await getCurrentPosition();
-      const places = await getPlaces({ lat, lng }, 1000);
+      const initialPlaces = await getPlaces({ lat, lng }, 1000, pageToken);
 
       setPosition({ lat, lng });
-      setPlaces(places);
+      setPlaces(initialPlaces.results);
+      setPageToken(initialPlaces.next_page_token);
     };
 
-    fetchData()
+    fetchData();
   }, []);
+
+  useInterval(async () => {
+    if (pageToken) {
+      const nextPlaces = await getPlaces(position, 1000, pageToken);
+      setPlaces((prevPlaces) => [...prevPlaces, ...nextPlaces.results]);
+      setPageToken(nextPlaces.next_page_token);
+    }
+  }, 2000);
 
   return (
     <GoogleMap

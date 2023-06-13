@@ -1,7 +1,11 @@
 import { IRequestParams, TLatLngLiterals, TGooglePlace } from "shared/types";
 import { request } from "./axiosService";
 
-const getPlaces = async (position: TLatLngLiterals, radius: number) => {
+const getPlaces = async (
+  position: TLatLngLiterals,
+  radius: number,
+  pageToken: string | undefined
+) => {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const url = process.env.REACT_APP_GOOGLE_PLACES_URL;
 
@@ -15,31 +19,16 @@ const getPlaces = async (position: TLatLngLiterals, radius: number) => {
     },
   };
 
-  let allResults: TGooglePlace[] = [];
-
-  try {
-    let pageToken: string | undefined = undefined;
-
-    do {
-      if (pageToken) {
-        options.params = options.params || {};
-        options.params.pagetoken = pageToken;
-      }
-
-      const response = await request(options);
-
-      console.log(response);
-
-      allResults = allResults.concat(response.results);
-      pageToken = response.next_page_token;
-
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    } while (pageToken);
-
-    return allResults;
-  } catch (error) {
-    throw error;
+  if (pageToken) {
+    options.params = options.params || {};
+    options.params.pagetoken = pageToken;
   }
+
+  const response = await request(options);
+
+  console.log(response);
+
+  return response;
 };
 
 export default getPlaces;
