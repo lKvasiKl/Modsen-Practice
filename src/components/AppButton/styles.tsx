@@ -1,14 +1,27 @@
 import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { createTheme, styled } from "@mui/material/styles";
+import { IAppButtonProps } from "shared/types";
 
-export const StyledButton = styled(Button)(({ color }) => ({
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#5E7BC7",
+    },
+    secondary: {
+      main: "#C75E5E",
+    },
+  },
+});
+
+const StyledButton = styled(Button)(({ color }: IAppButtonProps) => ({
   minWidth: "40px",
   width: "60px",
   height: "60px",
   borderRadius: "6px",
-  backgroundColor: color,
+  backgroundColor: theme.palette[color].main,
 
-  "&.hover": {
+  "&:hover": {
+    backgroundColor: theme.palette[color].main,
     border: "3px solid #C4C4C4",
   },
 
@@ -17,3 +30,5 @@ export const StyledButton = styled(Button)(({ color }) => ({
     height: "40px",
   },
 }));
+
+export { theme, StyledButton };

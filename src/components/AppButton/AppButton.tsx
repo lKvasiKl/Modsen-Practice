@@ -1,12 +1,8 @@
+import { IAppButtonProps } from "shared/types";
 import { StyledButton } from "./styles";
 
-interface IAppButtonProps {
-  children: React.ReactNode;
-  color: string;
-}
-
 const AppButton = ({ children, color }: IAppButtonProps) => {
-  return <StyledButton>{children}</StyledButton>;
+  return <StyledButton color={color}>{children}</StyledButton>;
 };
 
 export default AppButton;
