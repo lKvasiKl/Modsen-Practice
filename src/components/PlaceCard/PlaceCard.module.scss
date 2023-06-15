@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 0 30px 0 20px;
+  margin: 20px 0 10px 0;
+  gap: 35px;
+
+  .imageContainer {
+    position: relative;
+
+    .image {
+      border-radius: 10px;
+      border: none;
+      background-color: #808080;
+    }
+
+    .icon {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      border-radius: 100px;
+      border: 1px solid #c4c4c4;
+    }
+  }
+
+  .placeName {
+    width: 190px;
+    font-family: "Mont";
+    font-weight: 800;
+    font-size: 16px;
+    color: #373737;
+    align-self: center;
+  }
+}
+
+.placeDescription {
+  padding: 0 30px 0 20px;
+  margin-bottom: 10px;
+  height: 40px;
+  overflow: hidden;
+  font-family: "Mont";
+  font-weight: 600;
+  font-size: 10px;
+  color: #373737;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px 0 20px;
+  margin-bottom: 10px;
+
+  .svgFavorite,
+  .svgArrow {
+    width: 20px;
+    height: 20px;
+  }
+
+  .svgFavorite {
+    & path {
+      fill: #c75e5e;
+    }
+  }
+}

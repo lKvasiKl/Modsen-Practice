@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const StyledBox = styled(Box)(() => ({
+const StyledBox = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -13,3 +13,5 @@ export const StyledBox = styled(Box)(() => ({
     maxWidth: "70px",
   },
 }));
+
+export { StyledBox };
