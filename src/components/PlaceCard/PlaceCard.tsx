@@ -5,8 +5,8 @@ import { ArrowRIcon, FavoriteIcon } from "assets/icons";
 import styles from "./PlaceCard.module.scss";
 
 interface IPlaceCardProps {
-  image: string | undefined;
-  icon: string | undefined;
+  image?: string;
+  icon?: string;
   name: string;
   description: string;
 }

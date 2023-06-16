@@ -1,4 +1,4 @@
-import { IRequestParams, TLatLngLiterals, TGooglePlace } from "shared/types";
+import { IRequestParams, TLatLngLiterals } from "shared/types";
 import { request } from "./axiosService";
 
 const getPlaces = async (
@@ -24,11 +24,7 @@ const getPlaces = async (
     options.params.pagetoken = pageToken;
   }
 
-  const response = await request(options);
-
-  console.log(response);
-
-  return response;
+  return await request(options);
 };
 
 export default getPlaces;

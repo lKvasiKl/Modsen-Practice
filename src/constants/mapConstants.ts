@@ -1,16 +1,23 @@
 type TMapOptions = google.maps.MapOptions;
+interface ICircleOptions {
+  strokeWeight?: number;
+  strokeColor?: string;
+  fillColor: string;
+}
 
 const DEFAULT_ZOOM = 15;
 const CIRCLE_RADIUS_SMALL = 200;
-const SMALL_CIRCLE_OPTIONS = {
+const SMALL_CIRCLE_OPTIONS: ICircleOptions = {
   strokeWeight: 0,
   fillColor: "#5E7BC733",
 };
-const LARGE_CIRCLE_OPTIONS = {
+
+const LARGE_CIRCLE_OPTIONS: ICircleOptions = {
   strokeWeight: 2,
   strokeColor: "#5E7BC733",
   fillColor: "#5E7BC71A",
 };
+
 const MAP_OPTIONS: TMapOptions = {
   disableDefaultUI: true,
   zoomControl: true,

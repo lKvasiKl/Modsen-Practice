@@ -28,6 +28,9 @@ const Map = () => {
   const onLoad = useCallback((map: TGoogleMap) => {
     mapRef.current = map;
   }, []);
+  const onUnmount = useCallback(() => {
+    mapRef.current = undefined;
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +60,7 @@ const Map = () => {
       mapContainerClassName={styles.mapContainer}
       options={MAP_OPTIONS}
       onLoad={onLoad}
+      onUnmount={onUnmount}
     >
       {position && (
         <>

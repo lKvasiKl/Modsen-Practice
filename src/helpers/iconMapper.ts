@@ -99,10 +99,8 @@ const typeToIconMap: IconMap = {
   tourist_attraction: touristIcon,
 };
 
-const getMarkerIcon = (type: string) => {
-  const icon = typeToIconMap[type];
-
-  return icon ? icon : defaultIcon;
+const getMarkerIcon = (type: string): string => {
+  return typeToIconMap[type] ?? defaultIcon;
 };
 
 export default getMarkerIcon;
