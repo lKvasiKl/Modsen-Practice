@@ -18,13 +18,9 @@ const request = async ({
     params,
   };
 
-  try {
-    const result = await axiosInstance(options);
+  const result = await axiosInstance(options);
 
-    return result.data;
-  } catch (error) {
-    throw error;
-  }
+  return result.data;
 };
 
 export { request };

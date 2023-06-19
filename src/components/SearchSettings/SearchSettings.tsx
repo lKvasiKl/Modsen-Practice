@@ -24,13 +24,13 @@ const SearchSettings = () => {
       <List className={styles.list}>
         {PLACES.map((place) => {
           return (
-            <ListItem className={styles.listItem}>
+            <ListItem className={styles.listItem} key={place.placeName}>
               <ListItemButton
                 className={styles.listItemButton}
                 role={undefined}
                 // onClick={handleToggle(place.isCheced)}
               >
-                <img width="30px" height="30px" src={place.icon} />
+                <img height="30px" src={place.icon} width="30px" />
                 <ListItemText
                   className={styles.listItemText}
                   primary={place.placeName}
@@ -45,12 +45,12 @@ const SearchSettings = () => {
         <div className={styles.inputWrapper}>
           <Input
             className={styles.input}
-            type="number"
-            value={radius}
             inputProps={{
               min: 1,
               max: 50,
             }}
+            type="number"
+            value={radius}
             onChange={handleChange}
           />
           <span className={styles.description}>км</span>

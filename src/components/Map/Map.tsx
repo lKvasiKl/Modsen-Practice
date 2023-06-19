@@ -55,26 +55,26 @@ const Map = () => {
 
   return (
     <GoogleMap
-      zoom={DEFAULT_ZOOM}
       center={position}
       mapContainerClassName={styles.mapContainer}
       options={MAP_OPTIONS}
+      zoom={DEFAULT_ZOOM}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
       {position && (
         <>
-          <Marker position={position} icon={markerIcon} />
+          <Marker icon={markerIcon} position={position} />
           <PlaceMarkers places={places} />
           <Circle
             center={position}
-            radius={CIRCLE_RADIUS_SMALL}
             options={SMALL_CIRCLE_OPTIONS}
+            radius={CIRCLE_RADIUS_SMALL}
           />
           <Circle
             center={position}
-            radius={1000}
             options={LARGE_CIRCLE_OPTIONS}
+            radius={1000}
           />
         </>
       )}

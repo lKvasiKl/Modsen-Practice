@@ -12,11 +12,11 @@ const PlaceCard = ({ image, icon, name, description }: IPlaceCardProps) => {
         <div className={styles.imageContainer}>
           <img
             className={styles.image}
-            width="150px"
             height="130px"
             src={image}
+            width="150px"
           />
-          <img className={styles.icon} width="25px" height="25px" src={icon} />
+          <img className={styles.icon} height="25px" src={icon} width="25px" />
         </div>
         <span className={styles.placeName}>{name}</span>
       </div>

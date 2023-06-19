@@ -17,7 +17,7 @@ export interface IRequestParams {
   headers?: Record<string, string>;
   method: THttpMethod;
   url: string;
-  data?: any;
+  data?: unknown;
   params?: Record<string, string>;
 }
 

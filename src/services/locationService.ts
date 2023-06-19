@@ -13,14 +13,10 @@ const getCurrentPosition = async (): Promise<TLatLngLiterals> => {
     },
   };
 
-  try {
-    const response = await request(options);
-    const { lat, lng } = response.location;
+  const response = await request(options);
+  const { lat, lng } = response.location;
 
-    return { lat, lng };
-  } catch (error) {
-    throw error;
-  }
+  return { lat, lng };
 };
 
 export default getCurrentPosition;

@@ -20,9 +20,9 @@ const renderMarkers = (places: TGooglePlace[]) => {
     .filter(filterPlaces)
     .map((place) => (
       <Marker
+        icon={getMarkerIcon(place.types?.[0])}
         key={place.place_id}
         position={place.geometry?.location}
-        icon={getMarkerIcon(place.types?.[0])}
       />
     ));
 };
