@@ -4,11 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { addSessionToStorage } from "helpers/tokens";
-
-interface IAuthProps {
-  email: string;
-  password: string;
-}
+import { IAuthProps } from "shared/types";
 
 const register = ({ email, password }: IAuthProps) => {
   const auth = getAuth();
