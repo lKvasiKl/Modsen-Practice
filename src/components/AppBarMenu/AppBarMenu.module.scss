@@ -1,0 +1,47 @@
+.logoIcon {
+  padding-top: 30px;
+  margin-bottom: 40px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  order: 1;
+
+  .svgIcon {
+    @media (max-width: 600px) {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    order: 2;
+    margin-top: auto;
+    padding-bottom: 15px;
+  }
+}
+
+.avatarContainer {
+  margin-top: auto;
+  padding-bottom: 38px;
+  order: 2;
+
+  .avatar {
+    background-color: #ffa500;
+    border: 3px solid #00000033;
+    width: 48px;
+    height: 48px;
+
+    @media (max-width: 600px) {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    margin-top: 0;
+    order: 1;
+  }
+}

@@ -6,22 +6,29 @@ interface PlaceMarkersProps {
   places: TGooglePlace[];
 }
 
+const filterPlaces = (place: TGooglePlace) => {
+  return (
+    place &&
+    place.types &&
+    !place.types.includes("locality") &&
+    !place.types.includes("political")
+  );
+};
+
+const renderMarkers = (places: TGooglePlace[]) => {
+  return places
+    .filter(filterPlaces)
+    .map((place) => (
+      <Marker
+        key={place.place_id}
+        position={place.geometry?.location}
+        icon={getMarkerIcon(place.types?.[0])}
+      />
+    ));
+};
+
 const PlaceMarkers = ({ places }: PlaceMarkersProps) => (
-  <>
-    {places
-      ?.filter(
-        (place) =>
-          !place.types.includes("locality") &&
-          !place.types.includes("political")
-      )
-      .map((place) => (
-        <Marker
-          key={place?.place_id}
-          position={place?.geometry.location}
-          icon={getMarkerIcon(place?.types[0])}
-        />
-      ))}
-  </>
+  <>{renderMarkers(places)}</>
 );
 
 export default PlaceMarkers;

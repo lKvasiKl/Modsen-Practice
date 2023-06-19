@@ -20,3 +20,15 @@ export interface IRequestParams {
   data?: any;
   params?: Record<string, string>;
 }
+
+export interface IAppButtonProps {
+  children: React.ReactNode;
+  color: "primary" | "secondary";
+}
+
+export interface IPlaceCardProps {
+  image?: string;
+  icon?: string;
+  name: string;
+  description: string;
+}

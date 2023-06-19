@@ -11,7 +11,7 @@ import cofeeIcon from "../assets/icons/coffee.svg";
 import bicycleIcon from "../assets/icons/bicycle.svg";
 import religionIcon from "../assets/icons/religion.svg";
 import gasStationIcon from "../assets/icons/gas_station.svg";
-import nayureIcon from "../assets/icons/nature.svg";
+import natureIcon from "../assets/icons/nature.svg";
 import sportIcon from "../assets/icons/football.svg";
 import touristIcon from "../assets/icons/history.svg";
 import defaultIcon from "../assets/icons/other.svg";
@@ -91,7 +91,7 @@ const typeToIconMap: IconMap = {
   mosque: religionIcon,
   synagogue: religionIcon,
 
-  park: nayureIcon,
+  park: natureIcon,
 
   gym: sportIcon,
   stadium: sportIcon,
@@ -99,10 +99,8 @@ const typeToIconMap: IconMap = {
   tourist_attraction: touristIcon,
 };
 
-const getMarkerIcon = (type: string) => {
-  const icon = typeToIconMap[type];
-
-  return icon ? icon : defaultIcon;
+const getMarkerIcon = (type: string): string => {
+  return typeToIconMap[type] ?? defaultIcon;
 };
 
 export default getMarkerIcon;
