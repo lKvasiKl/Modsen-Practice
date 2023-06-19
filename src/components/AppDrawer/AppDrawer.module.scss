@@ -25,6 +25,10 @@
     color: #373737;
     padding-right: 30px;
   }
+
+  @media (max-width: 600px) {
+    width: 260px;
+  }
 }
 
 .title {

@@ -12,6 +12,11 @@
       border-radius: 10px;
       border: none;
       background-color: #808080;
+
+      @media (max-width: 600px) {
+        width: 210px;
+        height: 190px;
+      }
     }
 
     .icon {
@@ -30,6 +35,15 @@
     font-size: 16px;
     color: #373737;
     align-self: center;
+
+    @media (max-width: 600px) {
+      width: 210px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 15px;
   }
 }
 

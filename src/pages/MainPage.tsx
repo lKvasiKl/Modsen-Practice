@@ -17,7 +17,7 @@ const MainPage = () => {
   return (
     <>
       <AppBarMenu />
-      <AppDrawer title="Избранное:" />
+      <AppDrawer title="Искать:" />
       <Map />
     </>
   );

@@ -13,7 +13,7 @@ const StyledBox = styled(Box)(() => ({
   zIndex: 1,
 
   "@media (max-width: 600px)": {
-    maxWidth: "70px",
+    maxWidth: "303px",
   },
 }));
 
@@ -33,8 +33,7 @@ const StyledButton = styled(Button)(() => ({
   },
 
   "@media (max-width: 600px)": {
-    width: "40px",
-    height: "40px",
+    display: "none",
   },
 }));
 

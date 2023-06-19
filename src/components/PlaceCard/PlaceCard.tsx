@@ -1,15 +1,9 @@
 import { StyledCard } from "./styles";
 import { IconButton } from "@mui/material";
 import { ArrowRIcon, FavoriteIcon } from "assets/icons";
+import { IPlaceCardProps } from "shared/types";
 
 import styles from "./PlaceCard.module.scss";
-
-interface IPlaceCardProps {
-  image?: string;
-  icon?: string;
-  name: string;
-  description: string;
-}
 
 const PlaceCard = ({ image, icon, name, description }: IPlaceCardProps) => {
   return (
