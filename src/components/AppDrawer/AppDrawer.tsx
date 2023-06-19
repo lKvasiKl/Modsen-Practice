@@ -1,4 +1,5 @@
-import { ArrowLIcon, SearchIcon } from "assets/icons";
+import { useState } from "react";
+import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
 import { StyledBox, StyledButton } from "./styles";
 import { InputBase } from "@mui/material";
 import cultureIcon from "../../assets/icons/culture.svg";
@@ -14,11 +15,15 @@ interface IAppDrawerProps {
 }
 
 const AppDrawer = ({ title }: IAppDrawerProps) => {
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  const handleOpen = () => {
+    setOpen(!isOpen);
+  };
+
   return (
-    <div
-      style={{ display: "flex", position: "relative", alignItems: "center" }}
-    >
-      <StyledBox>
+    <div className={`${styles.container}`}>
+      <StyledBox className={isOpen ? styles.open : styles.containerClosed}>
         <div className={styles.inputWrapper}>
           <SearchIcon className={styles.svgIcon} />
           <InputBase className={styles.input} placeholder="Место, адрес.." />
@@ -39,8 +44,11 @@ const AppDrawer = ({ title }: IAppDrawerProps) => {
         {/* <RouteCard distance="1,1" time="40" /> */}
         <SearchSettings />
       </StyledBox>
-      <StyledButton>
-        <ArrowLIcon />
+      <StyledButton
+        className={isOpen ? styles.open : styles.buttonClosed}
+        onClick={handleOpen}
+      >
+        {isOpen ? <ArrowLIcon /> : <ArrowRIcon />}
       </StyledButton>
     </div>
   );
