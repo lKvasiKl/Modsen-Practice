@@ -1,0 +1,95 @@
+.container {
+  width: 440px;
+  height: 500px;
+  border-radius: 10px;
+  border: 3px solid #c4c4c4;
+  padding-bottom: 16px;
+
+  .list {
+    width: 425px;
+    height: 500px;
+    overflow: auto;
+    margin-bottom: 30px;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #c4c4c4;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #808080;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .listItem {
+      padding: 0;
+
+      .listItemButton {
+        display: flex;
+        gap: 20px;
+
+        .listItemText {
+          font-family: "Mont";
+          font-weight: 700;
+          font-size: 14px;
+          color: #373737;
+        }
+      }
+    }
+  }
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .text {
+    font-family: "Mont";
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .input {
+      width: 100px;
+      height: 50px;
+      border-radius: 10px;
+      border: 3px solid #c4c4c4;
+      padding-left: 30px;
+      font-family: "Mont";
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .description {
+      font-family: "Mont";
+      font-weight: 800;
+      font-size: 16px;
+    }
+  }
+
+  .button {
+    width: 440px;
+    height: 50px;
+    background-color: #5e7bc7;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: #5e7bc7;
+      border: 3px solid #c4c4c4;
+    }
+  }
+}
