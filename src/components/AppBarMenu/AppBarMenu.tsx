@@ -1,8 +1,10 @@
-import { LogoIcon, SearchIcon, FavoriteIcon } from "assets/icons";
 import { Avatar, ThemeProvider } from "@mui/material";
-import AppButton from "components/AppButton/AppButton";
 
+import AppButton from "components/AppButton/AppButton";
 import { theme } from "components/AppButton/styles";
+
+import { LogoIcon, SearchIcon, FavoriteIcon } from "assets/icons";
+
 import { StyledBox } from "./styles";
 import styles from "./AppBarMenu.module.scss";
 

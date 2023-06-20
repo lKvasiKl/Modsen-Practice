@@ -3,15 +3,17 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { addSessionToStorage } from "helpers/tokens";
+
 import { IAuthProps } from "shared/types";
+
+import { addSessionToCookie } from "helpers/tokens";
 
 const register = ({ email, password }: IAuthProps) => {
   const auth = getAuth();
   createUserWithEmailAndPassword(auth, email, password)
     .then(({ user }) => {
       user.getIdToken().then((accessToken) => {
-        addSessionToStorage("accessToken", accessToken);
+        addSessionToCookie("accessToken", accessToken);
       });
     })
     .catch((error) => {
@@ -24,7 +26,7 @@ const login = ({ email, password }: IAuthProps) => {
   signInWithEmailAndPassword(auth, email, password)
     .then(({ user }) => {
       user.getIdToken().then((accessToken) => {
-        addSessionToStorage("accessToken", accessToken);
+        addSessionToCookie("accessToken", accessToken);
       });
     })
     .catch((error) => {

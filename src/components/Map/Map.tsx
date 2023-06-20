@@ -1,18 +1,24 @@
 import { useCallback, useRef, useEffect, useState } from "react";
 import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
+
+import getCurrentPosition from "services/locationService";
+import getPlaces from "services/placesServise";
+
+import PlaceMarkers from "components/PlaceMarkers/PlaceMarkers";
+
 import { TGoogleMap, TGooglePlace, TLatLngLiterals } from "shared/types";
+
+import useInterval from "hooks/useInterval";
+
 import {
   CIRCLE_RADIUS_SMALL,
   DEFAULT_ZOOM,
   LARGE_CIRCLE_OPTIONS,
   MAP_OPTIONS,
   SMALL_CIRCLE_OPTIONS,
-} from "../../constants/mapConstants";
-import PlaceMarkers from "components/PlaceMarkers/PlaceMarkers";
-import getCurrentPosition from "services/locationService";
-import getPlaces from "services/placesServise";
-import useInterval from "hooks/useInterval";
-import markerIcon from "../../assets/icons/marker.svg";
+} from "constants/mapConstants";
+
+import markerIcon from "assets/icons/marker.svg";
 
 import styles from "./Map.module.scss";
 
@@ -35,7 +41,7 @@ const Map = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { lat, lng } = await getCurrentPosition();
-      const initialPlaces = await getPlaces({ lat, lng }, 1000, pageToken);
+      const initialPlaces = await getPlaces({ lat, lng }, 1000);
 
       setPosition({ lat, lng });
       setPlaces(initialPlaces.results);

@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext } from "react";
-import {
-  getSessionFromStorage,
-  removeSessionFromStorage,
-} from "helpers/tokens";
-import * as authService from "../services/authService";
+
 import { IAuthProps } from "shared/types";
+
+import { getSessionFromCookie, removeSessionFromCookie } from "helpers/tokens";
+
+import * as authService from "../services/authService";
 
 interface IAuthProviderProps {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [isAuth, setAuth] = useState<boolean>(false);
 
   useEffect(() => {
-    const accessToken = getSessionFromStorage("accessToken") || false;
+    const accessToken = getSessionFromCookie("accessToken") || false;
 
     if (accessToken) {
       setAuth(true);
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const logout = () => {
     setAuth(false);
-    removeSessionFromStorage("accessToken");
+    removeSessionFromCookie("accessToken");
   };
 
   const value = {

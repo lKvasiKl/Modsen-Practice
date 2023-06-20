@@ -7,10 +7,12 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+
 import { PLACES } from "constants/searchSettingsConstants";
 
-import styles from "./SearchSettings.module.scss";
 import { SearchIcon } from "assets/icons";
+
+import styles from "./SearchSettings.module.scss";
 
 const SearchSettings = () => {
   const [radius, setRadius] = useState<number>(1);
@@ -30,7 +32,7 @@ const SearchSettings = () => {
                 role={undefined}
                 // onClick={handleToggle(place.isCheced)}
               >
-                <img height="30px" src={place.icon} width="30px" />
+                <img alt="place" height="30px" src={place.icon} width="30px" />
                 <ListItemText
                   className={styles.listItemText}
                   primary={place.placeName}

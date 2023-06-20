@@ -1,4 +1,5 @@
 import { IAppButtonProps } from "shared/types";
+
 import { StyledButton } from "./styles";
 
 const AppButton = ({ children, color }: IAppButtonProps) => {

@@ -1,10 +1,11 @@
 import { IRequestParams, TLatLngLiterals } from "shared/types";
+
 import { request } from "./axiosService";
 
 const getPlaces = async (
   position: TLatLngLiterals,
   radius: number,
-  pageToken: string | undefined
+  pageToken?: string,
 ) => {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const url = process.env.REACT_APP_GOOGLE_PLACES_URL;

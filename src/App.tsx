@@ -1,4 +1,5 @@
 import AuthProvider from "providers/AuthProvider";
+
 import MainPage from "./pages/MainPage";
 
 function App() {

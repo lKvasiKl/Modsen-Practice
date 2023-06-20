@@ -1,10 +1,22 @@
-const addSessionToStorage = (key: string, token: string): void =>
-  localStorage.setItem(key, `${token}`);
+interface ICookies {
+  [key: string]: string;
+}
 
-const getSessionFromStorage = (key: string): string | null =>
-  localStorage.getItem(key);
+const addSessionToCookie = (key: string, token: string): void => {
+  document.cookie = `${key}=${token}`;
+};
 
-const removeSessionFromStorage = (key: string): void =>
-  localStorage.removeItem(key);
+const getSessionFromCookie = (key: string): string | null => {
+  const cookies: ICookies = document.cookie
+    .split(";")
+    .map((cookie) => cookie.trim().split("="))
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
-export { addSessionToStorage, getSessionFromStorage, removeSessionFromStorage };
+  return cookies[key] || null;
+};
+
+const removeSessionFromCookie = (key: string): void => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+};
+
+export { addSessionToCookie, getSessionFromCookie, removeSessionFromCookie };
