@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useState, useEffect, createContext } from "react";
 
 import { IAuthProps } from "shared/types";
@@ -10,7 +11,17 @@ interface IAuthProviderProps {
   children: React.ReactNode;
 }
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext<{
+  isAuth: boolean;
+  register: (form: IAuthProps) => void;
+  login: (form: IAuthProps) => void;
+  logout: () => void;
+}>({
+  isAuth: false,
+  register: () => {},
+  login: () => {},
+  logout: () => {},
+});
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [isAuth, setAuth] = useState<boolean>(false);
