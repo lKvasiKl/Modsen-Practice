@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { createTheme, styled } from "@mui/material/styles";
+
 import { IAppButtonProps } from "shared/types";
 
 const theme = createTheme({

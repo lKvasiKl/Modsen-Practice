@@ -32,3 +32,8 @@ export interface IPlaceCardProps {
   name: string;
   description: string;
 }
+
+export interface IAuthProps {
+  email: string;
+  password: string;
+}

@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
-import { StyledBox, StyledButton } from "./styles";
 import { InputBase } from "@mui/material";
-import cultureIcon from "../../assets/icons/culture.svg";
 
-import styles from "./AppDrawer.module.scss";
 import PlaceCard from "components/PlaceCard/PlaceCard";
 import PlaceInfoCard from "components/PlaceInfoCard/PlaceInfoCard";
 import RouteCard from "components/RouteCard/RouteCard";
 import SearchSettings from "components/SearchSettings/SearchSettings";
+
+import cultureIcon from "assets/icons/culture.svg";
+import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
+
+import styles from "./AppDrawer.module.scss";
+import { StyledBox, StyledButton } from "./styles";
 
 interface IAppDrawerProps {
   title: string;

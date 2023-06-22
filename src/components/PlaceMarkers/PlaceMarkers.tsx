@@ -1,5 +1,7 @@
-import { TGooglePlace } from "shared/types";
 import { Marker } from "@react-google-maps/api";
+
+import { TGooglePlace } from "shared/types";
+
 import getMarkerIcon from "helpers/iconMapper";
 
 interface PlaceMarkersProps {

@@ -1,4 +1,5 @@
 import { IRequestParams, TLatLngLiterals } from "shared/types";
+
 import { request } from "./axiosService";
 
 const getCurrentPosition = async (): Promise<TLatLngLiterals> => {
