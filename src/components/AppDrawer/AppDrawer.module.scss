@@ -58,4 +58,17 @@
     font-weight: 800;
     color: #373737;
   }
+
+  .showText {
+    width: 440px;
+    text-align: start;
+    font-size: 16px;
+    font-family: "Mont";
+    font-weight: 600;
+    color: #373737;
+  }
+
+  .hideText {
+    display: none;
+  }
 }

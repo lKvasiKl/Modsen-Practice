@@ -18,7 +18,6 @@ const MainPage = () => {
   return (
     <>
       <AppBarMenu />
-
       <Map />
     </>
   );
