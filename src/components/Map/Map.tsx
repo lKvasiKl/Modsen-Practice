@@ -1,6 +1,8 @@
 import { useCallback, useRef, useEffect, useState } from "react";
 import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
 
+import DrawerProvider from "providers/DarwerProvider";
+
 import getCurrentPosition from "services/locationService";
 import getPlaces from "services/placesServise";
 
@@ -71,7 +73,9 @@ const Map = () => {
       {position && (
         <>
           <Marker icon={markerIcon} position={position} />
-          <PlaceMarkers places={places} />
+          <DrawerProvider>
+            <PlaceMarkers places={places} />
+          </DrawerProvider>
           <Circle
             center={position}
             options={SMALL_CIRCLE_OPTIONS}

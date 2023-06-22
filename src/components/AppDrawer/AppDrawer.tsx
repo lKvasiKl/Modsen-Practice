@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
 import { InputBase } from "@mui/material";
 
 import PlaceCard from "components/PlaceCard/PlaceCard";
@@ -8,6 +7,7 @@ import RouteCard from "components/RouteCard/RouteCard";
 import SearchSettings from "components/SearchSettings/SearchSettings";
 
 import { useAuth } from "hooks/useAuth";
+import { useDrawer } from "hooks/useDrawer";
 
 import cultureIcon from "assets/icons/culture.svg";
 import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
@@ -15,26 +15,22 @@ import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
 import styles from "./AppDrawer.module.scss";
 import { StyledBox, StyledButton } from "./styles";
 
-interface IAppDrawerProps {
-  isSearchDrawer?: boolean;
-  isFavoriteDrawer?: boolean;
-}
-
-const AppDrawer = ({
-  isSearchDrawer = false,
-  isFavoriteDrawer = false,
-}: IAppDrawerProps) => {
-  const [isOpen, setOpen] = useState<boolean>(false);
-
+const AppDrawer = () => {
   const { isAuth } = useAuth();
+  const {
+    isOpen,
+    isSearchDrawer,
+    isFavoriteDrawer,
+    setOpen,
+    setSerchDrawer,
+    setFavoriteDrawer,
+  } = useDrawer();
 
   const handleOpen = () => {
     setOpen(!isOpen);
+    isSearchDrawer && setSerchDrawer(!isSearchDrawer);
+    isFavoriteDrawer && setFavoriteDrawer(!isFavoriteDrawer);
   };
-
-  useEffect(() => {
-    setOpen(isSearchDrawer || isFavoriteDrawer);
-  }, [isSearchDrawer, isFavoriteDrawer]);
 
   return (
     <div className={`${styles.container}`}>

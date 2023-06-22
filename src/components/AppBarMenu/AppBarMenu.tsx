@@ -15,6 +15,7 @@ import AppDrawer from "components/AppDrawer/AppDrawer";
 import { IAuthProps } from "shared/types";
 
 import { useAuth } from "hooks/useAuth";
+import { useDrawer } from "hooks/useDrawer";
 
 import { LogoIcon, SearchIcon, FavoriteIcon } from "assets/icons";
 
@@ -25,11 +26,16 @@ const AppBarMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
   const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
-  const [isSearchDrawer, setSerchDrawer] = useState<boolean>(false);
-  const [isFavoriteDrawer, setFavoriteDrawer] = useState<boolean>(false);
   const open = Boolean(anchorEl);
 
   const { isAuth, login, register, logout } = useAuth();
+  const {
+    isSearchDrawer,
+    isFavoriteDrawer,
+    setOpen,
+    setSerchDrawer,
+    setFavoriteDrawer,
+  } = useDrawer();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -64,7 +70,15 @@ const AppBarMenu = () => {
   };
 
   const handleSearch = () => {
+    setOpen(true);
+    isFavoriteDrawer && setFavoriteDrawer(!isFavoriteDrawer);
     setSerchDrawer(!isSearchDrawer);
+  };
+
+  const handleFavorite = () => {
+    setOpen(true);
+    isSearchDrawer && setSerchDrawer(!isSearchDrawer);
+    setFavoriteDrawer(!isFavoriteDrawer);
   };
 
   return (
@@ -80,6 +94,7 @@ const AppBarMenu = () => {
           </Button>
           <Button
             className={isFavoriteDrawer ? styles.favOpen : styles.favButton}
+            onClick={handleFavorite}
           >
             <FavoriteIcon className={styles.svgIcon} />
           </Button>
@@ -143,7 +158,7 @@ const AppBarMenu = () => {
           </AuthForm>
         )}
       </StyledBox>
-      <AppDrawer isSearchDrawer={isSearchDrawer} />
+      <AppDrawer />
     </>
   );
 };
