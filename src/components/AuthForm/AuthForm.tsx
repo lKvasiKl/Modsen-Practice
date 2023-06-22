@@ -8,22 +8,38 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { VisibilityOff, Visibility, Close } from "@mui/icons-material";
 
 import { LogoIcon } from "assets/icons";
 
 import styles from "./AuthForm.module.scss";
 
-interface IAuthForm {
-  children: React.ReactNode;
-  onSubmit: (form: object) => void;
-  onClick?: () => void;
-  linkTo: string;
+interface IAuthProps {
+  email: string;
+  password: string;
 }
 
-const AuthForm = ({ children, onSubmit, onClick, linkTo }: IAuthForm) => {
-  const [form, setForm] = useState({});
+interface IAuthForm {
+  children: React.ReactNode;
+  onSubmit: (form: IAuthProps) => void;
+  onClick?: () => void;
+  onClose: () => void;
+  linkText?: string;
+  linkTo?: string;
+}
+
+const AuthForm = ({
+  children,
+  onSubmit,
+  onClick,
+  onClose,
+  linkText,
+  linkTo,
+}: IAuthForm) => {
+  const [form, setForm] = useState<IAuthProps>({ email: "", password: "" });
   const [isVisible, setVisible] = useState(false);
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
 
   const handleClickShowPassword = () => {
     setVisible((prevState) => !prevState);
@@ -37,33 +53,61 @@ const AuthForm = ({ children, onSubmit, onClick, linkTo }: IAuthForm) => {
 
   const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setForm({ ...form, [name]: value });
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    setEmailError("");
+    setPasswordError("");
   };
 
-  const handleForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    try {
+      await onSubmit(form);
+    } catch (error: any) {
+      if (error.code === "auth/email-already-in-use") {
+        setEmailError("Пользователь с таким email уже существует");
+      } else if (error.code === "auth/weak-password") {
+        setPasswordError("Слишком слабый пароль");
+      } else if (
+        error.code === "auth/user-not-found" ||
+        error.code === "auth/wrong-password"
+      ) {
+        setEmailError("Неправильный email или пароль");
+        setPasswordError("Неправильный email или пароль");
+      } else {
+        setEmailError("Произошла ошибка входа");
+        setPasswordError("Произошла ошибка входа");
+      }
+    }
+  };
 
-    onSubmit(form);
+  const handleCloseForm = () => {
+    onClose();
   };
 
   return (
     <div className={styles.formContainer}>
+      <IconButton className={styles.closeButton} onClick={handleCloseForm}>
+        <Close />
+      </IconButton>
       <div className={styles.formHeader}>
         <LogoIcon className={styles.logoIcon} />
         <span className={styles.text}>Mappie</span>
       </div>
       <form className={styles.form} onSubmit={handleForm}>
-        <FormControl className={styles.formControl}>
+        <FormControl className={styles.formControl} error={!!emailError}>
           <InputLabel>Email</InputLabel>
           <OutlinedInput
+            autoComplete="on"
             label="Email"
+            name="email"
             type="email"
             onChange={handleChangeForm}
           />
         </FormControl>
-        <FormControl className={styles.formControl}>
+        <FormControl className={styles.formControl} error={!!passwordError}>
           <InputLabel>Password</InputLabel>
           <OutlinedInput
+            autoComplete="current-password"
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -76,18 +120,31 @@ const AuthForm = ({ children, onSubmit, onClick, linkTo }: IAuthForm) => {
               </InputAdornment>
             }
             label="Password"
+            name="password"
             type={isVisible ? "text" : "password"}
             onChange={handleChangeForm}
           />
         </FormControl>
-        <Button className={styles.button}>{children}</Button>
-        <div className={styles.linkContainer}>
-          <span className={styles.text}>Don&apos;t have an account?</span>
-          <Link className={styles.link} component="button" onClick={onClick}>
-            {linkTo}
-          </Link>
-        </div>
+        {emailError && passwordError ? (
+          <span className={styles.error}>{emailError}</span>
+        ) : (
+          <>
+            {emailError && <span className={styles.error}>{emailError}</span>}
+            {passwordError && (
+              <span className={styles.error}>{passwordError}</span>
+            )}
+          </>
+        )}
+        <Button className={styles.button} type="submit">
+          {children}
+        </Button>
       </form>
+      <div className={styles.linkContainer}>
+        <span className={styles.text}>{linkText}</span>
+        <Link className={styles.link} component="button" onClick={onClick}>
+          {linkTo}
+        </Link>
+      </div>
     </div>
   );
 };

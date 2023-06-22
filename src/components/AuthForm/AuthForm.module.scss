@@ -16,6 +16,18 @@
     width: 300px;
   }
 
+  .closeButton {
+    width: 30px;
+    height: 30px;
+    align-self: flex-end;
+    margin-top: 10px;
+    margin-right: 10px;
+
+    &:hover {
+      color: #c75e5e;
+    }
+  }
+
   .formHeader {
     display: inherit;
     gap: 25px;
@@ -52,6 +64,14 @@
       @media (max-width: 600px) {
         width: 250px;
       }
+    }
+
+    .error {
+      color: #c75e5e;
+      align-self: center;
+      font-size: 16px;
+      font-family: "Mont";
+      font-weight: 600;
     }
 
     .button {

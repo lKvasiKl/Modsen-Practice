@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useState, useEffect, createContext } from "react";
 
@@ -34,14 +35,22 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   }, []);
 
-  const register = (form: IAuthProps) => {
-    authService.register(form);
-    setAuth(true);
+  const register = async (form: IAuthProps) => {
+    try {
+      await authService.register(form);
+      setAuth(true);
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const login = (form: IAuthProps) => {
-    authService.login(form);
-    setAuth(true);
+  const login = async (form: IAuthProps) => {
+    try {
+      await authService.login(form);
+      setAuth(true);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const logout = () => {
