@@ -80,6 +80,11 @@
       font-family: "Mont";
       font-weight: 600;
       font-size: 16px;
+
+      &::before,
+      &::after {
+        border-bottom: none;
+      }
     }
 
     .description {

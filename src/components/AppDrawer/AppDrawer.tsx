@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InputBase } from "@mui/material";
 
 import PlaceCard from "components/PlaceCard/PlaceCard";
@@ -14,15 +14,19 @@ import styles from "./AppDrawer.module.scss";
 import { StyledBox, StyledButton } from "./styles";
 
 interface IAppDrawerProps {
-  title: string;
+  isSearchDrawer?: boolean;
 }
 
-const AppDrawer = ({ title }: IAppDrawerProps) => {
+const AppDrawer = ({ isSearchDrawer }: IAppDrawerProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => {
     setOpen(!isOpen);
   };
+
+  useEffect(() => {
+    setOpen(isSearchDrawer || false);
+  }, [isSearchDrawer]);
 
   return (
     <div className={`${styles.container}`}>
@@ -31,7 +35,7 @@ const AppDrawer = ({ title }: IAppDrawerProps) => {
           <SearchIcon className={styles.svgIcon} />
           <InputBase className={styles.input} placeholder="Место, адрес.." />
         </div>
-        <span className={styles.title}>{title}</span>
+        <span className={styles.title}>{isSearchDrawer && "Искать:"}</span>
         {/* <PlaceCard
           image={undefined}
           icon={cultureIcon}
@@ -45,7 +49,7 @@ const AppDrawer = ({ title }: IAppDrawerProps) => {
           description="Lörem ipsum jere. Intrabel peraktiv pävufåsk läslov pide. Exon prelogi. Någonstansare  begöpp. Homoadoption tesände keck såsom köttrymden. Epigen digon fast svennefiera håven postfaktisk. Atomslöjd defåling nigovena tegt i platt-tv. Sextremism julgranssyndrom. Rit-avdrag fyr, jukanat don. Apfälla menskopp eftersom spetät senessa inklusive mepaktiga. Bloggbävning makroligt spepp gönas. Sitskate epir tidsfönster. Hjärtslagslag defånera. Neck röstsamtal möbelhund. Hexaledes ryggsäcksmodellen hikikomori när stenomiheten täpos. Du kan vara drabbad."
         /> */}
         {/* <RouteCard distance="1,1" time="40" /> */}
-        <SearchSettings />
+        {isSearchDrawer && <SearchSettings />}
       </StyledBox>
       <StyledButton
         className={isOpen ? styles.open : styles.buttonClosed}

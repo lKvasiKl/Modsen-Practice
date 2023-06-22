@@ -9,6 +9,78 @@
   gap: 15px;
   order: 1;
 
+  .searchOpen,
+  .searchButton,
+  .favOpen,
+  .favButton {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      border: 3px solid #c4c4c4;
+    }
+
+    @media (max-width: 600px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .searchButton {
+    background-color: #5e7bc7;
+  }
+
+  .searchOpen {
+    background-color: #ffffff;
+    border: 3px solid #c4c4c4;
+
+    .svgIcon {
+      & path {
+        fill: #5e7bc7;
+      }
+    }
+
+    &:hover {
+      background-color: #5e7bc7;
+      border: none;
+
+      .svgIcon {
+        & path {
+          fill: #ffffff;
+        }
+      }
+    }
+  }
+
+  .favButton {
+    background-color: #c75e5e;
+  }
+
+  .favOpen {
+    background-color: #ffffff;
+    border: 3px solid #c4c4c4;
+
+    .svgIcon {
+      & path {
+        fill: #c75e5e;
+      }
+    }
+
+    &:hover {
+      background-color: #c75e5e;
+      border: none;
+
+      .svgIcon {
+        & path {
+          fill: #ffffff;
+        }
+      }
+    }
+  }
+
   .svgIcon {
     @media (max-width: 600px) {
       width: 15px;

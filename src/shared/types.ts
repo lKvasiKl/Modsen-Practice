@@ -24,6 +24,7 @@ export interface IRequestParams {
 export interface IAppButtonProps {
   children: React.ReactNode;
   color: "primary" | "secondary";
+  onClick?: () => void;
 }
 
 export interface IPlaceCardProps {
