@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 
 import { StyledCard } from "components/PlaceCard/styles";
 
-import { IPlaceCardProps } from "shared/types";
+import { IPlaceCardProps } from "shared/interface/interface";
 
 import { FavoriteIcon, PointIcon } from "assets/icons";
 

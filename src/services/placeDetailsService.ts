@@ -1,4 +1,4 @@
-import { IRequestParams } from "shared/types";
+import { IRequestParams } from "shared/interface/interface";
 
 import { request } from "./axiosService";
 

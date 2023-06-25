@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { IAuthProps } from "shared/types";
+import { IAuthProps } from "shared/interface/interface";
 
 import { addSessionToCookie } from "helpers/tokens";
 

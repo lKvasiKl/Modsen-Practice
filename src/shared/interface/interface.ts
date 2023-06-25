@@ -1,18 +1,5 @@
 type THttpMethod = "POST" | "GET";
 
-export type TGoogleMap = google.maps.Map;
-export type TLatLngLiterals = google.maps.LatLngLiteral;
-export type TGooglePlace = {
-  place_id: string;
-  geometry: {
-    location: {
-      lat: number;
-      lng: number;
-    };
-  };
-  types: string[];
-};
-
 export interface IRequestParams {
   headers?: Record<string, string>;
   method: THttpMethod;
@@ -24,7 +11,7 @@ export interface IRequestParams {
 export interface IAppButtonProps {
   children: React.ReactNode;
   color: "primary" | "secondary";
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 export interface IPlaceCardProps {
@@ -35,6 +22,11 @@ export interface IPlaceCardProps {
 }
 
 export interface IAuthProps {
+  email: string;
+  password: string;
+}
+
+export interface IFormProps {
   email: string;
   password: string;
 }

@@ -27,9 +27,9 @@ const AppDrawer = () => {
   } = useDrawer();
 
   const handleOpen = () => {
-    setOpen(!isOpen);
-    isSearchDrawer && setSerchDrawer(!isSearchDrawer);
-    isFavoriteDrawer && setFavoriteDrawer(!isFavoriteDrawer);
+    setOpen((prevState) => !prevState);
+    isSearchDrawer && setSerchDrawer((prevState) => !prevState);
+    isFavoriteDrawer && setFavoriteDrawer((prevState) => !prevState);
   };
 
   return (

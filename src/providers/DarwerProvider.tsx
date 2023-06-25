@@ -8,9 +8,9 @@ export const DrawerContext = createContext<{
   isOpen: boolean;
   isSearchDrawer: boolean;
   isFavoriteDrawer: boolean;
-  setOpen: (isOpen: boolean) => void;
-  setSerchDrawer: (isSearchDrawer: boolean) => void;
-  setFavoriteDrawer: (isFavoriteDrawer: boolean) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSerchDrawer: React.Dispatch<React.SetStateAction<boolean>>;
+  setFavoriteDrawer: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isOpen: false,
   isSearchDrawer: false,

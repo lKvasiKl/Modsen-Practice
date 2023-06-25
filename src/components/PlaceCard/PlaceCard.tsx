@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 
-import { IPlaceCardProps } from "shared/types";
+import { IPlaceCardProps } from "shared/interface/interface";
 
 import { ArrowRIcon, FavoriteIcon } from "assets/icons";
 

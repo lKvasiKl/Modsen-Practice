@@ -2,27 +2,19 @@ import { Marker } from "@react-google-maps/api";
 
 import getPlaceDetail from "services/placeDetailsService";
 
-import { TGooglePlace } from "shared/types";
+import { TGooglePlace } from "shared/types/types";
 
 import { useDrawer } from "hooks/useDrawer";
 
 import getMarkerIcon from "helpers/iconMapper";
 import { getCache, saveCache } from "helpers/cache";
+import filterPlaces from "helpers/placesFilter";
 
-interface PlaceMarkersProps {
+interface IPlaceMarkersProps {
   places: TGooglePlace[];
 }
 
-const filterPlaces = (place: TGooglePlace) => {
-  return (
-    place &&
-    place.types &&
-    !place.types.includes("locality") &&
-    !place.types.includes("political")
-  );
-};
-
-const PlaceMarkers = ({ places }: PlaceMarkersProps) => {
+const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
   const { isOpen, setOpen } = useDrawer();
 
   const handleMarkerClick = async (placeId: string) => {
@@ -48,7 +40,7 @@ const PlaceMarkers = ({ places }: PlaceMarkersProps) => {
       saveCache("placesCache", cache);
     }
 
-    !isOpen && setOpen(true);
+    !isOpen && setOpen((prevState) => !prevState);
   };
 
   const renderMarkers = (places: TGooglePlace[]) => {

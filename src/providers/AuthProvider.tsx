@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 
-import { IAuthProps } from "shared/types";
+import { IAuthProps } from "shared/interface/interface";
 
 import { getSessionFromCookie, removeSessionFromCookie } from "helpers/tokens";
 
