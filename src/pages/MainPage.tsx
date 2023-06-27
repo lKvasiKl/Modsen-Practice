@@ -6,11 +6,14 @@ import Map from "components/Map/Map";
 import AppBarMenu from "components/AppBarMenu/AppBarMenu";
 import PinLoader from "components/PinLoader/PinLoader";
 
+import { LIBRARIES } from "constants/mapConstants/config";
+
 const MainPage = () => {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: `${apiKey}`,
+    libraries: LIBRARIES,
   });
 
   if (!isLoaded) {

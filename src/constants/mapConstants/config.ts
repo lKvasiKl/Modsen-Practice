@@ -1,5 +1,6 @@
 import { ICircleOptions, TMapOptions } from "./interfaces";
 
+const LIBRARIES: "places"[] = ["places"];
 const DEFAULT_ZOOM = 15;
 const CIRCLE_RADIUS_SMALL = 200;
 const SMALL_CIRCLE_OPTIONS: ICircleOptions = {
@@ -26,6 +27,7 @@ const MAP_OPTIONS: TMapOptions = {
 };
 
 export {
+  LIBRARIES,
   DEFAULT_ZOOM,
   CIRCLE_RADIUS_SMALL,
   SMALL_CIRCLE_OPTIONS,

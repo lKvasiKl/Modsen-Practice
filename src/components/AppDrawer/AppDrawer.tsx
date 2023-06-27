@@ -5,15 +5,15 @@ import PlaceCard from "components/PlaceCard/PlaceCard";
 import RouteCard from "components/RouteCard/RouteCard";
 import SearchSettings from "components/SearchSettings/SearchSettings";
 import PlaceDescription from "components/PlaceDescription/PlaceDescription";
+import SearchInput from "components/SearchInput/SearchInput";
 
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
 
 import getMarkerIcon from "helpers/iconMapper";
-import { getCache, getCacheItem } from "helpers/cache";
+import { getCacheItem } from "helpers/cache";
 import { getImageUrl } from "helpers/imageUrlConstructor";
 
-import cultureIcon from "assets/icons/culture.svg";
 import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
 
 import styles from "./AppDrawer.module.scss";
@@ -40,10 +40,7 @@ const AppDrawer = () => {
   return (
     <div className={`${styles.container}`}>
       <StyledBox className={isOpen ? styles.open : styles.containerClosed}>
-        <div className={styles.inputWrapper}>
-          <SearchIcon className={styles.svgIcon} />
-          <InputBase className={styles.input} placeholder="Место, адрес.." />
-        </div>
+        <SearchInput placeholder="Место, адрес.." />
         <span className={styles.title}>
           {isSearchDrawer && "Искать:"}
           {isFavoriteDrawer && "Избранное:"}
@@ -51,22 +48,21 @@ const AppDrawer = () => {
         <div className={styles.contentContainer}>
           {isAuth && isFavoriteDrawer ? (
             //TODO: Get and mup fav places from firebase store
-            // <PlaceCard
-            //   description={
-            //     <PlaceDescription
-            //       address={getCacheItem(infoPlaceCardId).address}
-            //       raiting={getCacheItem(infoPlaceCardId).rating}
-            //     />
-            //   }
-            //   icon={getMarkerIcon(getCacheItem(infoPlaceCardId).type)}
-            //   image={getImageUrl(
-            //     getCacheItem(infoPlaceCardId).photoUrlReference,
-            //     150,
-            //     130,
-            //   )}
-            //   name={getCacheItem(infoPlaceCardId).name}
-            // />
-            <></>
+            <PlaceCard
+              description={
+                <PlaceDescription
+                  address={getCacheItem(infoPlaceCardId).address}
+                  raiting={getCacheItem(infoPlaceCardId).rating}
+                />
+              }
+              icon={getMarkerIcon(getCacheItem(infoPlaceCardId).type)}
+              image={getImageUrl(
+                getCacheItem(infoPlaceCardId).photoUrlReference,
+                150,
+                130,
+              )}
+              name={getCacheItem(infoPlaceCardId).name}
+            />
           ) : (
             <span
               className={isFavoriteDrawer ? styles.showText : styles.hideText}
