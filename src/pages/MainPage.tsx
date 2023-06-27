@@ -18,12 +18,10 @@ const MainPage = () => {
   }
 
   return (
-    <>
-      <DrawerProvider>
-        <AppBarMenu />
-      </DrawerProvider>
+    <DrawerProvider>
+      <AppBarMenu />
       <Map />
-    </>
+    </DrawerProvider>
   );
 };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Avatar,
+  Box,
   IconButton,
   ListItemIcon,
   Menu,
@@ -12,14 +13,13 @@ import { Button } from "@mui/base";
 import AuthForm from "components/AuthForm/AuthForm";
 import AppDrawer from "components/AppDrawer/AppDrawer";
 
-import { IAuthProps } from "shared/types";
+import { IAuthProps } from "shared/interface/interface";
 
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
 
 import { LogoIcon, SearchIcon, FavoriteIcon } from "assets/icons";
 
-import { StyledBox } from "./styles";
 import styles from "./AppBarMenu.module.scss";
 
 const AppBarMenu = () => {
@@ -32,9 +32,11 @@ const AppBarMenu = () => {
   const {
     isSearchDrawer,
     isFavoriteDrawer,
+    infoPlaceCardId,
     setOpen,
     setSerchDrawer,
     setFavoriteDrawer,
+    setInfoPlaceCardId,
   } = useDrawer();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -71,19 +73,21 @@ const AppBarMenu = () => {
 
   const handleSearch = () => {
     setOpen(true);
-    isFavoriteDrawer && setFavoriteDrawer(!isFavoriteDrawer);
-    setSerchDrawer(!isSearchDrawer);
+    isFavoriteDrawer && setFavoriteDrawer((prevState) => !prevState);
+    infoPlaceCardId && setInfoPlaceCardId("");
+    setSerchDrawer((prevState) => !prevState);
   };
 
   const handleFavorite = () => {
     setOpen(true);
-    isSearchDrawer && setSerchDrawer(!isSearchDrawer);
-    setFavoriteDrawer(!isFavoriteDrawer);
+    isSearchDrawer && setSerchDrawer((prevState) => !prevState);
+    infoPlaceCardId && setInfoPlaceCardId("");
+    setFavoriteDrawer((prevState) => !prevState);
   };
 
   return (
     <>
-      <StyledBox>
+      <Box className={styles.menuContainer}>
         <LogoIcon className={styles.logoIcon} />
         <div className={styles.buttonContainer}>
           <Button
@@ -157,7 +161,7 @@ const AppBarMenu = () => {
             Register
           </AuthForm>
         )}
-      </StyledBox>
+      </Box>
       <AppDrawer />
     </>
   );

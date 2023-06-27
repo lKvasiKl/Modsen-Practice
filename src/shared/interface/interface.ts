@@ -17,8 +17,9 @@ export interface IAppButtonProps {
 export interface IPlaceCardProps {
   image?: string;
   icon?: string;
+  type?: "info";
   name: string;
-  description: string;
+  description: React.ReactNode;
 }
 
 export interface IAuthProps {

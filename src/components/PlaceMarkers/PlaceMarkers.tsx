@@ -15,7 +15,14 @@ interface IPlaceMarkersProps {
 }
 
 const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
-  const { isOpen, setOpen } = useDrawer();
+  const {
+    isSearchDrawer,
+    isFavoriteDrawer,
+    setOpen,
+    setSerchDrawer,
+    setFavoriteDrawer,
+    setInfoPlaceCardId,
+  } = useDrawer();
 
   const handleMarkerClick = async (placeId: string) => {
     const lastVisitDate = localStorage.getItem("lastVisitDate");
@@ -40,7 +47,10 @@ const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
       saveCache("placesCache", cache);
     }
 
-    !isOpen && setOpen((prevState) => !prevState);
+    setOpen(true);
+    setInfoPlaceCardId(placeId);
+    isSearchDrawer && setSerchDrawer(false);
+    isFavoriteDrawer && setFavoriteDrawer(false);
   };
 
   const renderMarkers = (places: TGooglePlace[]) => {

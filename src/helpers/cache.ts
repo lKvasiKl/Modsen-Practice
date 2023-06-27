@@ -3,8 +3,12 @@ const getCache = (cacheKey: string) => {
   return cacheItem ? JSON.parse(cacheItem) : {};
 };
 
+const getCacheItem = (itemKey: string) => {
+  return getCache("placesCache")[itemKey];
+};
+
 const saveCache = (cahceKey: string, cache: object) => {
   localStorage.setItem(cahceKey, JSON.stringify(cache));
 };
 
-export { getCache, saveCache };
+export { getCache, getCacheItem, saveCache };

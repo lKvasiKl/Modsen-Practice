@@ -61,6 +61,15 @@
     color: $font-color;
   }
 
+  .contentContainer {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  }
+
   .showText {
     width: 440px;
     text-align: start;

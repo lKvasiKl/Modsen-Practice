@@ -1,4 +1,5 @@
-import { IRequestParams, TLatLngLiterals } from "shared/types";
+import { TLatLngLiterals } from "shared/types/types";
+import { IRequestParams } from "shared/interface/interface";
 
 import { request } from "./axiosService";
 
