@@ -1,3 +1,5 @@
+@import "../../assets/styles/color";
+
 .pin {
   animation-name: pin;
   animation-duration: 1.2s;
@@ -5,7 +7,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50% 50% 50% 0;
-  background: #312783;
+  background: $main-pin-color;
   position: absolute;
   transform: rotate(-45deg);
   left: 50%;
@@ -17,14 +19,14 @@
     width: 14px;
     height: 14px;
     margin: 8px 0 0 8px;
-    background: #ffe388;
+    background: $secondary-pin-color;
     position: absolute;
     border-radius: 50%;
   }
 }
 
 .pulse {
-  background: rgba(0, 0, 0, 0.2);
+  background: $avatar-border;
   border-radius: 50%;
   height: 14px;
   width: 14px;
@@ -45,7 +47,7 @@
     animation: pulsate 1s ease-out;
     animation-iteration-count: infinite;
     opacity: 0;
-    box-shadow: 0 0 1px 2px #312783;
+    box-shadow: 0 0 1px 2px $main-pin-color;
   }
 }
 

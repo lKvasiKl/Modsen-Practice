@@ -1,3 +1,5 @@
+@import "../../assets/styles/color";
+
 .container {
   display: flex;
   position: relative;
@@ -5,6 +7,7 @@
 
   .open {
     margin-left: 0;
+    overflow: auto;
   }
 
   .containerClosed {
@@ -22,7 +25,7 @@
     margin-bottom: 30px;
     width: 440px;
     height: 60px;
-    border: 3px solid #c4c4c4;
+    border: 3px solid $light-gray;
     border-radius: 10px;
 
     .svgIcon {
@@ -30,7 +33,7 @@
       margin-left: 20px;
 
       & path {
-        fill: #373737;
+        fill: $font-color;
       }
     }
 
@@ -39,7 +42,7 @@
       font-size: 16px;
       font-family: "Mont";
       font-weight: 600;
-      color: #373737;
+      color: $font-color;
       padding-right: 30px;
     }
 
@@ -55,6 +58,28 @@
     font-size: 20px;
     font-family: "Mont";
     font-weight: 800;
-    color: #373737;
+    color: $font-color;
+  }
+
+  .contentContainer {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  }
+
+  .showText {
+    width: 440px;
+    text-align: start;
+    font-size: 16px;
+    font-family: "Mont";
+    font-weight: 600;
+    color: $font-color;
+  }
+
+  .hideText {
+    display: none;
   }
 }

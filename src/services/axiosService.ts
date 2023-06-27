@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-import { IRequestParams } from "shared/types";
+import { IRequestParams } from "shared/interface/interface";
 
 const axiosInstance = axios.create();
 

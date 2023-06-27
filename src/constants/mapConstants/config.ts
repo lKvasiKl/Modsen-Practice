@@ -1,9 +1,4 @@
-type TMapOptions = google.maps.MapOptions;
-interface ICircleOptions {
-  strokeWeight?: number;
-  strokeColor?: string;
-  fillColor: string;
-}
+import { ICircleOptions, TMapOptions } from "./interfaces";
 
 const DEFAULT_ZOOM = 15;
 const CIRCLE_RADIUS_SMALL = 200;

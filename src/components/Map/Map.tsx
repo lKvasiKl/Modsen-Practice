@@ -6,7 +6,7 @@ import getPlaces from "services/placesServise";
 
 import PlaceMarkers from "components/PlaceMarkers/PlaceMarkers";
 
-import { TGoogleMap, TGooglePlace, TLatLngLiterals } from "shared/types";
+import { TGoogleMap, TGooglePlace, TLatLngLiterals } from "shared/types/types";
 
 import useInterval from "hooks/useInterval";
 
@@ -16,7 +16,7 @@ import {
   LARGE_CIRCLE_OPTIONS,
   MAP_OPTIONS,
   SMALL_CIRCLE_OPTIONS,
-} from "constants/mapConstants";
+} from "constants/mapConstants/config";
 
 import markerIcon from "assets/icons/marker.svg";
 

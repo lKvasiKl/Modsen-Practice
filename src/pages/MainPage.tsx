@@ -1,8 +1,9 @@
 import { useLoadScript } from "@react-google-maps/api";
 
+import DrawerProvider from "providers/DarwerProvider";
+
 import Map from "components/Map/Map";
 import AppBarMenu from "components/AppBarMenu/AppBarMenu";
-import AppDrawer from "components/AppDrawer/AppDrawer";
 import PinLoader from "components/PinLoader/PinLoader";
 
 const MainPage = () => {
@@ -17,11 +18,10 @@ const MainPage = () => {
   }
 
   return (
-    <>
+    <DrawerProvider>
       <AppBarMenu />
-      <AppDrawer title="Искать:" />
       <Map />
-    </>
+    </DrawerProvider>
   );
 };
 

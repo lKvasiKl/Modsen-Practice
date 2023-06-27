@@ -8,3 +8,9 @@ declare module "*.svg" {
   export const ReactComponent;
   export default content;
 }
+
+declare module "*.png" {
+  const content: Icon;
+  export const ReactComponent;
+  export default content;
+}
