@@ -1,12 +1,16 @@
 import AuthProvider from "providers/AuthProvider";
 
+import ErrorBoundary from "components/ErrorBoundary/ErrorBoundary";
+
 import MainPage from "./pages/MainPage";
 
 function App() {
   return (
-    <AuthProvider>
-      <MainPage />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <MainPage />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
