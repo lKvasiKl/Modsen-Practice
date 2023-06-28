@@ -7,6 +7,8 @@ import SearchSettings from "components/SearchSettings/SearchSettings";
 import PlaceDescription from "components/PlaceDescription/PlaceDescription";
 import SearchInput from "components/SearchInput/SearchInput";
 
+import { TGooglePlace, TLatLngLiterals } from "shared/types/types";
+
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
 

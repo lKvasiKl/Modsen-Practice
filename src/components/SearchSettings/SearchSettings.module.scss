@@ -41,6 +41,7 @@
 
     .listItem {
       padding: 0;
+      opacity: 0.5;
 
       .listItemButton {
         display: flex;
@@ -53,6 +54,26 @@
           color: $font-color;
         }
       }
+    }
+
+    .selectedItem {
+      opacity: 1;
+    }
+  }
+
+  .errorContainer {
+    display: flex;
+    max-height: 70px;
+    margin-bottom: 30px;
+    height: 100%;
+    align-items: center;
+
+    .error {
+      color: $red;
+      text-align: center;
+      font-size: 16px;
+      font-family: "Mont";
+      font-weight: 600;
     }
   }
 }

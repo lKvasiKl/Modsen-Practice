@@ -31,3 +31,7 @@ export interface IFormProps {
   email: string;
   password: string;
 }
+
+export interface IProviderProps {
+  children: React.ReactNode;
+}
