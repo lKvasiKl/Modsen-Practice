@@ -1,14 +1,15 @@
-import { useCallback, useRef, useEffect, useState } from "react";
+import { useCallback, useRef, useEffect } from "react";
 import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
 
 import getCurrentPosition from "services/locationService";
-import getPlaces from "services/placesServise";
+import { getPlaces } from "services/placesServise";
 
 import PlaceMarkers from "components/PlaceMarkers/PlaceMarkers";
 
-import { TGoogleMap, TGooglePlace, TLatLngLiterals } from "shared/types/types";
+import { TGoogleMap } from "shared/types/types";
 
 import useInterval from "hooks/useInterval";
+import { useMapData } from "hooks/useMapData";
 
 import {
   CIRCLE_RADIUS_SMALL,
@@ -23,12 +24,15 @@ import markerIcon from "assets/icons/marker.svg";
 import styles from "./Map.module.scss";
 
 const Map = () => {
-  const [position, setPosition] = useState<TLatLngLiterals>({
-    lat: 48,
-    lng: -23,
-  });
-  const [places, setPlaces] = useState<TGooglePlace[]>([]);
-  const [pageToken, setPageToken] = useState<string | undefined>(undefined);
+  const {
+    radius,
+    position,
+    places,
+    pageToken,
+    setPosition,
+    setPlaces,
+    setPageToken,
+  } = useMapData();
 
   const mapRef = useRef<TGoogleMap>();
   const onLoad = useCallback((map: TGoogleMap) => {
@@ -41,7 +45,7 @@ const Map = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { lat, lng } = await getCurrentPosition();
-      const initialPlaces = await getPlaces({ lat, lng }, 1000);
+      const initialPlaces = await getPlaces({ lat, lng }, radius * 1000);
 
       setPosition({ lat, lng });
       setPlaces(initialPlaces.results);
@@ -53,7 +57,7 @@ const Map = () => {
 
   useInterval(async () => {
     if (pageToken) {
-      const nextPlaces = await getPlaces(position, 1000, pageToken);
+      const nextPlaces = await getPlaces(position, radius * 1000, pageToken);
       setPlaces((prevPlaces) => [...prevPlaces, ...nextPlaces.results]);
       setPageToken(nextPlaces.next_page_token);
     }
@@ -80,7 +84,7 @@ const Map = () => {
           <Circle
             center={position}
             options={LARGE_CIRCLE_OPTIONS}
-            radius={1000}
+            radius={radius * 1000}
           />
         </>
       )}

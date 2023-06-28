@@ -1,6 +1,7 @@
 import { useLoadScript } from "@react-google-maps/api";
 
 import DrawerProvider from "providers/DarwerProvider";
+import MapDataProvider from "providers/MapDataProvider";
 
 import Map from "components/Map/Map";
 import AppBarMenu from "components/AppBarMenu/AppBarMenu";
@@ -22,8 +23,10 @@ const MainPage = () => {
 
   return (
     <DrawerProvider>
-      <AppBarMenu />
-      <Map />
+      <MapDataProvider>
+        <AppBarMenu />
+        <Map />
+      </MapDataProvider>
     </DrawerProvider>
   );
 };

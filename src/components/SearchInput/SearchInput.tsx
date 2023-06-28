@@ -39,7 +39,7 @@ const SearchInput = ({ placeholder }: ISearchImputProps) => {
     setValue("");
   };
 
-  const handleListItemClick = async (placeId: string) => {
+  const handleListItemClick = (placeId: string) => async () => {
     await setCacheItem("placesCache", placeId);
 
     setOpen(true);
@@ -67,7 +67,7 @@ const SearchInput = ({ placeholder }: ISearchImputProps) => {
             {data.map((suggestion) => (
               <ListItemButton
                 key={suggestion.place_id}
-                onClick={() => handleListItemClick(suggestion.place_id)}
+                onClick={handleListItemClick(suggestion.place_id)}
               >
                 <ListItemText primary={suggestion.description} />
               </ListItemButton>

@@ -22,7 +22,7 @@ const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
     setInfoPlaceCardId,
   } = useDrawer();
 
-  const handleMarkerClick = async (placeId: string) => {
+  const handleMarkerClick = (placeId: string) => async () => {
     await setCacheItem("placesCache", placeId);
 
     setOpen(true);
@@ -39,7 +39,7 @@ const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
           icon={getMarkerIcon(place.types?.[0])}
           key={place.place_id}
           position={place.geometry?.location}
-          onClick={() => handleMarkerClick(place.place_id)}
+          onClick={handleMarkerClick(place.place_id)}
         />
       ));
   };

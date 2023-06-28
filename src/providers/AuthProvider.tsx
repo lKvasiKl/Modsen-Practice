@@ -1,14 +1,10 @@
 import { useState, useEffect, createContext } from "react";
 
-import { IAuthProps } from "shared/interface/interface";
+import { IAuthProps, IProviderProps } from "shared/interface/interface";
 
 import { getSessionFromCookie, removeSessionFromCookie } from "helpers/tokens";
 
 import * as authService from "../services/authService";
-
-interface IAuthProviderProps {
-  children: React.ReactNode;
-}
 
 export const AuthContext = createContext<{
   isAuth: boolean;
@@ -22,7 +18,7 @@ export const AuthContext = createContext<{
   logout: () => undefined,
 });
 
-const AuthProvider = ({ children }: IAuthProviderProps) => {
+const AuthProvider = ({ children }: IProviderProps) => {
   const [isAuth, setAuth] = useState<boolean>(false);
 
   useEffect(() => {

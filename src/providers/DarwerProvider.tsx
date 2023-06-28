@@ -1,8 +1,6 @@
 import { createContext, useState } from "react";
 
-interface IDrawerProviderProps {
-  children: React.ReactNode;
-}
+import { IProviderProps } from "shared/interface/interface";
 
 export const DrawerContext = createContext<{
   isOpen: boolean;
@@ -24,7 +22,7 @@ export const DrawerContext = createContext<{
   setInfoPlaceCardId: () => undefined,
 });
 
-const DrawerProvider = ({ children }: IDrawerProviderProps) => {
+const DrawerProvider = ({ children }: IProviderProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [isSearchDrawer, setSerchDrawer] = useState<boolean>(false);
   const [isFavoriteDrawer, setFavoriteDrawer] = useState<boolean>(false);
