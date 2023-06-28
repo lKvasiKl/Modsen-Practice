@@ -2,6 +2,11 @@ import { Button, Card, IconButton } from "@mui/material";
 
 import { IPlaceCardProps } from "shared/interface/interface";
 
+import { useMapData } from "hooks/useMapData";
+import { useDrawer } from "hooks/useDrawer";
+
+import { getCacheItem } from "helpers/cache";
+
 import { ArrowRIcon, FavoriteIcon, PointIcon } from "assets/icons";
 
 import styles from "./PlaceCard.module.scss";
@@ -13,6 +18,27 @@ const PlaceCard = ({
   name,
   description,
 }: IPlaceCardProps) => {
+  const { position, setDirections } = useMapData();
+  const { infoPlaceCardId } = useDrawer();
+
+  const handleDirectionButtonClick = () => {
+    if (!position) return;
+
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: position,
+        destination: getCacheItem(infoPlaceCardId).position,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirections(result);
+        }
+      },
+    );
+  };
+
   return (
     <Card className={styles.card}>
       {type ? (
@@ -68,7 +94,10 @@ const PlaceCard = ({
               <FavoriteIcon className={styles.icon} />
               Сохранено
             </Button>
-            <Button className={styles.routeButton}>
+            <Button
+              className={styles.routeButton}
+              onClick={handleDirectionButtonClick}
+            >
               <PointIcon />
               Маршрут
             </Button>

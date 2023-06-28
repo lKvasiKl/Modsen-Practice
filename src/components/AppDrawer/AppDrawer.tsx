@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { InputBase } from "@mui/material";
-
 import PlaceCard from "components/PlaceCard/PlaceCard";
 import RouteCard from "components/RouteCard/RouteCard";
 import SearchSettings from "components/SearchSettings/SearchSettings";
 import PlaceDescription from "components/PlaceDescription/PlaceDescription";
 import SearchInput from "components/SearchInput/SearchInput";
-
-import { TGooglePlace, TLatLngLiterals } from "shared/types/types";
 
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
@@ -16,7 +12,7 @@ import getMarkerIcon from "helpers/iconMapper";
 import { getCacheItem } from "helpers/cache";
 import { getImageUrl } from "helpers/imageUrlConstructor";
 
-import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
+import { ArrowLIcon, ArrowRIcon } from "assets/icons";
 
 import styles from "./AppDrawer.module.scss";
 import { StyledBox, StyledButton } from "./styles";
@@ -55,6 +51,9 @@ const AppDrawer = () => {
                 <PlaceDescription
                   address={getCacheItem(infoPlaceCardId).address}
                   raiting={getCacheItem(infoPlaceCardId).rating}
+                  userRatingsTotal={
+                    getCacheItem(infoPlaceCardId).userRatingsTotal
+                  }
                 />
               }
               icon={getMarkerIcon(getCacheItem(infoPlaceCardId).type)}
@@ -81,6 +80,9 @@ const AppDrawer = () => {
                   isOpen={getCacheItem(infoPlaceCardId).isOpen}
                   raiting={getCacheItem(infoPlaceCardId).rating}
                   schedule={getCacheItem(infoPlaceCardId).schedule}
+                  userRatingsTotal={
+                    getCacheItem(infoPlaceCardId).userRatingsTotal
+                  }
                   website={getCacheItem(infoPlaceCardId).website}
                 />
               }

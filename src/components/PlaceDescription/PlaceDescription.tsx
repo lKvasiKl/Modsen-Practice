@@ -16,6 +16,7 @@ import styles from "./PlaceDescription.module.scss";
 
 interface IPlaceDescriptionProps {
   raiting: string | undefined;
+  userRatingsTotal: string | undefined;
   address: string | undefined;
   isOpen?: boolean | undefined;
   schedule?: string[] | undefined;
@@ -24,6 +25,7 @@ interface IPlaceDescriptionProps {
 
 const PlaceDescription = ({
   raiting,
+  userRatingsTotal,
   address,
   isOpen,
   schedule,
@@ -41,6 +43,7 @@ const PlaceDescription = ({
             size="small"
             value={+raiting}
           />
+          <span className={styles.raiting}>({userRatingsTotal})</span>
         </div>
       )}
       {address && (
