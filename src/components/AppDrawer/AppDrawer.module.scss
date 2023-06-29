@@ -1,0 +1,54 @@
+@import "../../assets/styles/color";
+
+.container {
+  display: flex;
+  position: relative;
+  align-items: center;
+
+  .open {
+    margin-left: 0;
+  }
+
+  .containerClosed {
+    display: none;
+  }
+
+  .buttonClosed {
+    margin-left: -500px;
+  }
+
+  .title {
+    align-self: flex-start;
+    margin-left: 33px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-family: "Mont";
+    font-weight: 800;
+    color: $font-color;
+  }
+
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+    gap: 20px;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  }
+
+  .showText {
+    width: 440px;
+    text-align: start;
+    font-size: 16px;
+    font-family: "Mont";
+    font-weight: 600;
+    color: $font-color;
+  }
+
+  .hideText {
+    display: none;
+  }
+}

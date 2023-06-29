@@ -1,0 +1,93 @@
+@import "../../assets/styles/color";
+
+.container {
+  display: flex;
+  border-bottom: 1px solid $light-gray;
+  gap: 15px;
+  padding: 10px 0;
+  align-items: center;
+
+  .raiting {
+    font-family: "Mont";
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .icon {
+    fill: $blue;
+  }
+
+  .address {
+    font-family: "Mont";
+    font-weight: 800;
+    font-size: 18px;
+  }
+
+  .open,
+  .close {
+    font-family: "Mont";
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .open {
+    color: $green;
+  }
+
+  .close {
+    color: $red;
+  }
+
+  .accordion {
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+
+    &:before {
+      display: none;
+    }
+
+    &.Mui-expanded {
+      margin: 0;
+    }
+
+    .accordionSummary {
+      background-color: transparent;
+      min-height: 0;
+      margin: 0;
+      height: fit-content;
+    }
+
+    .accordionDetails {
+      background-color: transparent;
+      width: 100%;
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+
+        li {
+          padding: 5px 0;
+        }
+      }
+    }
+  }
+
+  .websiteLink {
+    font-family: "Mont";
+    font-weight: 600;
+    font-size: 16px;
+    color: $font-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.scheduleContainer {
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
