@@ -18,10 +18,12 @@ const getPlaceDetail = async (place_id: string) => {
   const data = await request(options);
 
   return {
+    position: data.result.geometry.location,
     photoUrlReference: data.result.photos?.[0].photo_reference,
     type: data.result.types[0],
     name: data.result.name,
     rating: data.result.rating,
+    userRatingsTotal: data.result.user_ratings_total,
     address: data.result.formatted_address,
     isOpen: data.result.current_opening_hours?.open_now,
     schedule: data.result.current_opening_hours?.weekday_text,

@@ -1,5 +1,10 @@
 import { useCallback, useRef, useEffect } from "react";
-import { Circle, GoogleMap, Marker } from "@react-google-maps/api";
+import {
+  Circle,
+  GoogleMap,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 
 import getCurrentPosition from "services/locationService";
 import { getPlaces } from "services/placesServise";
@@ -29,6 +34,7 @@ const Map = () => {
     position,
     places,
     pageToken,
+    directions,
     setPosition,
     setPlaces,
     setPageToken,
@@ -88,6 +94,7 @@ const Map = () => {
           />
         </>
       )}
+      {directions && <DirectionsRenderer directions={directions} />}
     </GoogleMap>
   );
 };

@@ -1,22 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { InputBase } from "@mui/material";
-
 import PlaceCard from "components/PlaceCard/PlaceCard";
 import RouteCard from "components/RouteCard/RouteCard";
 import SearchSettings from "components/SearchSettings/SearchSettings";
 import PlaceDescription from "components/PlaceDescription/PlaceDescription";
 import SearchInput from "components/SearchInput/SearchInput";
 
-import { TGooglePlace, TLatLngLiterals } from "shared/types/types";
-
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
+import { useMapData } from "hooks/useMapData";
 
 import getMarkerIcon from "helpers/iconMapper";
 import { getCacheItem } from "helpers/cache";
 import { getImageUrl } from "helpers/imageUrlConstructor";
 
-import { ArrowLIcon, ArrowRIcon, SearchIcon } from "assets/icons";
+import { ArrowLIcon, ArrowRIcon } from "assets/icons";
 
 import styles from "./AppDrawer.module.scss";
 import { StyledBox, StyledButton } from "./styles";
@@ -33,6 +30,8 @@ const AppDrawer = () => {
     setFavoriteDrawer,
   } = useDrawer();
 
+  const { directions } = useMapData();
+
   const handleOpen = () => {
     setOpen((prevState) => !prevState);
     isSearchDrawer && setSerchDrawer((prevState) => !prevState);
@@ -47,6 +46,12 @@ const AppDrawer = () => {
           {isSearchDrawer && "Искать:"}
           {isFavoriteDrawer && "Избранное:"}
         </span>
+        {directions && (
+          <RouteCard
+            distance={directions.routes[0].legs[0].distance?.text}
+            time={directions.routes[0].legs[0].duration?.text}
+          />
+        )}
         <div className={styles.contentContainer}>
           {isAuth && isFavoriteDrawer ? (
             //TODO: Get and mup fav places from firebase store
@@ -55,6 +60,9 @@ const AppDrawer = () => {
                 <PlaceDescription
                   address={getCacheItem(infoPlaceCardId).address}
                   raiting={getCacheItem(infoPlaceCardId).rating}
+                  userRatingsTotal={
+                    getCacheItem(infoPlaceCardId).userRatingsTotal
+                  }
                 />
               }
               icon={getMarkerIcon(getCacheItem(infoPlaceCardId).type)}
@@ -81,6 +89,9 @@ const AppDrawer = () => {
                   isOpen={getCacheItem(infoPlaceCardId).isOpen}
                   raiting={getCacheItem(infoPlaceCardId).rating}
                   schedule={getCacheItem(infoPlaceCardId).schedule}
+                  userRatingsTotal={
+                    getCacheItem(infoPlaceCardId).userRatingsTotal
+                  }
                   website={getCacheItem(infoPlaceCardId).website}
                 />
               }
@@ -94,7 +105,6 @@ const AppDrawer = () => {
               type="info"
             />
           )}
-          {/* <RouteCard distance="1,1" time="40" /> */}
           {isSearchDrawer && <SearchSettings />}
         </div>
       </StyledBox>

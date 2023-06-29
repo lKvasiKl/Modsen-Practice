@@ -1,7 +1,11 @@
 import { createContext, useState } from "react";
 
 import { IProviderProps } from "shared/interface/interface";
-import { TGooglePlace, TLatLngLiterals } from "shared/types/types";
+import {
+  TGooglePlace,
+  TLatLngLiterals,
+  TDirectionResult,
+} from "shared/types/types";
 
 import { DEFAULT_LAT, DEFAULT_LNG } from "constants/mapConstants/config";
 
@@ -10,10 +14,14 @@ export const MapDataContext = createContext<{
   radius: number;
   places: TGooglePlace[];
   pageToken: string | undefined;
+  directions: TDirectionResult | undefined;
   setPosition: React.Dispatch<React.SetStateAction<TLatLngLiterals>>;
   setPlaces: React.Dispatch<React.SetStateAction<TGooglePlace[]>>;
   setPageToken: React.Dispatch<React.SetStateAction<string | undefined>>;
   setRadius: React.Dispatch<React.SetStateAction<number>>;
+  setDirections: React.Dispatch<
+    React.SetStateAction<TDirectionResult | undefined>
+  >;
 }>({
   position: {
     lat: DEFAULT_LAT,
@@ -22,10 +30,12 @@ export const MapDataContext = createContext<{
   radius: 1,
   places: [],
   pageToken: undefined,
+  directions: undefined,
   setPosition: () => undefined,
   setPlaces: () => undefined,
   setPageToken: () => undefined,
   setRadius: () => undefined,
+  setDirections: () => undefined,
 });
 
 const MapDataProvider = ({ children }: IProviderProps) => {
@@ -36,16 +46,21 @@ const MapDataProvider = ({ children }: IProviderProps) => {
   const [places, setPlaces] = useState<TGooglePlace[]>([]);
   const [pageToken, setPageToken] = useState<string | undefined>(undefined);
   const [radius, setRadius] = useState<number>(1);
+  const [directions, setDirections] = useState<TDirectionResult | undefined>(
+    undefined,
+  );
 
   const value = {
     radius,
     position,
     places,
     pageToken,
+    directions,
     setPosition,
     setPlaces,
     setPageToken,
     setRadius,
+    setDirections,
   };
 
   return (
