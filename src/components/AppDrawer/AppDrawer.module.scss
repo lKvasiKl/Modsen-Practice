@@ -29,8 +29,8 @@
 
   .contentContainer {
     display: flex;
-    height: 100%;
     flex-direction: column;
+    margin-bottom: 25px;
     gap: 20px;
 
     &::-webkit-scrollbar {

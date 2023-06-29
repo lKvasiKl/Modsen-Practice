@@ -50,10 +50,10 @@ const SearchInput = ({ placeholder }: ISearchImputProps) => {
     const db = getFirestore();
     const email = Cookies.get("email");
 
-    if (!email) {
-      console.error("Email не найден");
-    } else {
+    if (email) {
       setIsSaved(await isPlaceSaved(db, email, placeId));
+    } else {
+      console.error("Email не найден");
     }
 
     await setCacheItem("placesCache", placeId);

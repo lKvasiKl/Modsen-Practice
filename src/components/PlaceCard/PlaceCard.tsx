@@ -21,43 +21,50 @@ const PlaceCard = ({
   type,
   name,
   description,
+  onDelete,
+  onGetMoreInfo,
 }: IPlaceCardProps) => {
-  const { position, isSaved, setDirections, setIsSaved } = useMapData();
   const { infoPlaceCardId } = useDrawer();
+  const { position, directions, isSaved, setDirections, setIsSaved } =
+    useMapData();
 
   const handleDirectionButtonClick = () => {
     if (!position) return;
 
     const service = new google.maps.DirectionsService();
-    service.route(
-      {
-        origin: position,
-        destination: getCacheItem(infoPlaceCardId).position,
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === "OK" && result) {
-          setDirections(result);
-        }
-      },
-    );
+
+    if (directions) {
+      setDirections(undefined);
+    } else {
+      service.route(
+        {
+          origin: position,
+          destination: getCacheItem(infoPlaceCardId).position,
+          travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === "OK" && result) {
+            setDirections(result);
+          }
+        },
+      );
+    }
   };
 
   const handleSaveButtonClick = async () => {
     const db = getFirestore();
     const email = Cookies.get("email");
 
-    if (!email) {
-      console.error("Email не найден");
-      return;
-    }
-
-    if (isSaved) {
-      await deleteItem(db, email, infoPlaceCardId);
-      setIsSaved(false);
+    if (email) {
+      if (isSaved) {
+        await deleteItem(db, email, infoPlaceCardId);
+        setIsSaved(false);
+      } else {
+        await addPlaceInfo(db, email, getCacheItem(infoPlaceCardId));
+        setIsSaved(true);
+      }
     } else {
-      await addPlaceInfo(db, email, getCacheItem(infoPlaceCardId));
-      setIsSaved(true);
+      console.error("Email не найден");
     }
   };
 
@@ -113,26 +120,34 @@ const PlaceCard = ({
         {type ? (
           <>
             <Button
-              className={isSaved ? styles.savedButton : styles.saveButton}
+              className={
+                isSaved ? styles.savedButton : styles.savedActiveButton
+              }
               onClick={handleSaveButtonClick}
             >
-              <FavoriteIcon className={styles.icon} />
+              <FavoriteIcon
+                className={isSaved ? styles.icon : styles.iconActive}
+              />
               {isSaved ? "Сохранено" : "Сохранить"}
             </Button>
             <Button
-              className={styles.routeButton}
+              className={
+                directions ? styles.routeButton : styles.routeActiveButton
+              }
               onClick={handleDirectionButtonClick}
             >
-              <PointIcon />
-              Маршрут
+              <PointIcon
+                className={directions ? styles.icon : styles.iconActive}
+              />
+              {directions ? "Сбросить" : "Маршрут"}
             </Button>
           </>
         ) : (
           <>
-            <IconButton>
+            <IconButton onClick={onDelete}>
               <FavoriteIcon className={styles.svgFavorite} />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={onGetMoreInfo}>
               <ArrowRIcon className={styles.svgArrow} />
             </IconButton>
           </>

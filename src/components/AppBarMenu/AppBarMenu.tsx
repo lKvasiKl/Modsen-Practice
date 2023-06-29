@@ -9,6 +9,10 @@ import {
 } from "@mui/material";
 import { Login, Logout, PersonAdd } from "@mui/icons-material";
 import { Button } from "@mui/base";
+import { getFirestore } from "firebase/firestore";
+import Cookies from "js-cookie";
+
+import { getCollection } from "services/databaseService";
 
 import AuthForm from "components/AuthForm/AuthForm";
 import AppDrawer from "components/AppDrawer/AppDrawer";
@@ -17,6 +21,7 @@ import { IAuthProps } from "shared/interface/interface";
 
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
+import { useMapData } from "hooks/useMapData";
 
 import { LogoIcon, SearchIcon, FavoriteIcon } from "assets/icons";
 
@@ -37,7 +42,10 @@ const AppBarMenu = () => {
     setSerchDrawer,
     setFavoriteDrawer,
     setInfoPlaceCardId,
+    setLoading,
   } = useDrawer();
+
+  const { directions, setDirections, setFavoritePlaces } = useMapData();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -73,16 +81,32 @@ const AppBarMenu = () => {
 
   const handleSearch = () => {
     setOpen(true);
+    setLoading(false);
     isFavoriteDrawer && setFavoriteDrawer((prevState) => !prevState);
     infoPlaceCardId && setInfoPlaceCardId("");
+    directions && setDirections(undefined);
     setSerchDrawer((prevState) => !prevState);
   };
 
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     setOpen(true);
+    setLoading(true);
     isSearchDrawer && setSerchDrawer((prevState) => !prevState);
     infoPlaceCardId && setInfoPlaceCardId("");
+    directions && setDirections(undefined);
     setFavoriteDrawer((prevState) => !prevState);
+
+    const db = getFirestore();
+    const email = Cookies.get("email");
+
+    if (email) {
+      const favPlaces = await getCollection(db, email);
+
+      setFavoritePlaces(favPlaces);
+      setLoading(false);
+    } else {
+      console.error("Email не найден");
+    }
   };
 
   return (

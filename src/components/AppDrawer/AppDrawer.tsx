@@ -1,9 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { getFirestore } from "firebase/firestore";
+import Cookies from "js-cookie";
+
+import { deleteItem, getCollection } from "services/databaseService";
+
 import PlaceCard from "components/PlaceCard/PlaceCard";
 import RouteCard from "components/RouteCard/RouteCard";
 import SearchSettings from "components/SearchSettings/SearchSettings";
 import PlaceDescription from "components/PlaceDescription/PlaceDescription";
 import SearchInput from "components/SearchInput/SearchInput";
+import PinLoader from "components/PinLoader/PinLoader";
 
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
@@ -18,6 +23,16 @@ import { ArrowLIcon, ArrowRIcon } from "assets/icons";
 import styles from "./AppDrawer.module.scss";
 import { StyledBox, StyledButton } from "./styles";
 
+interface IPlaceProps {
+  address: string | undefined;
+  rating: string | undefined;
+  userRatingsTotal: string | undefined;
+  type: string;
+  photoUrlReference: string | undefined;
+  placeId: string;
+  name: string;
+}
+
 const AppDrawer = () => {
   const { isAuth } = useAuth();
   const {
@@ -25,17 +40,36 @@ const AppDrawer = () => {
     isSearchDrawer,
     isFavoriteDrawer,
     infoPlaceCardId,
+    isLoading,
     setOpen,
     setSerchDrawer,
     setFavoriteDrawer,
+    setLoading,
   } = useDrawer();
 
-  const { directions } = useMapData();
+  const { directions, favoritePlaces, setFavoritePlaces } = useMapData();
 
   const handleOpen = () => {
     setOpen((prevState) => !prevState);
     isSearchDrawer && setSerchDrawer((prevState) => !prevState);
     isFavoriteDrawer && setFavoriteDrawer((prevState) => !prevState);
+  };
+
+  const handleRemoveFavorite = (placeId: string) => async () => {
+    const db = getFirestore();
+    const email = Cookies.get("email");
+
+    if (email && placeId) {
+      setLoading(true);
+      await deleteItem(db, email, placeId);
+
+      const favPlaces = await getCollection(db, email);
+
+      setFavoritePlaces(favPlaces);
+      setLoading(false);
+    } else {
+      console.error("Email не найден");
+    }
   };
 
   return (
@@ -46,6 +80,7 @@ const AppDrawer = () => {
           {isSearchDrawer && "Искать:"}
           {isFavoriteDrawer && "Избранное:"}
         </span>
+        {isLoading && isFavoriteDrawer && isOpen && <PinLoader />}
         {directions && (
           <RouteCard
             distance={directions.routes[0].legs[0].distance?.text}
@@ -53,31 +88,43 @@ const AppDrawer = () => {
           />
         )}
         <div className={styles.contentContainer}>
-          {isAuth && isFavoriteDrawer ? (
-            //TODO: Get and mup fav places from firebase store
-            <PlaceCard
-              description={
-                <PlaceDescription
-                  address={getCacheItem(infoPlaceCardId).address}
-                  raiting={getCacheItem(infoPlaceCardId).rating}
-                  userRatingsTotal={
-                    getCacheItem(infoPlaceCardId).userRatingsTotal
-                  }
-                />
-              }
-              icon={getMarkerIcon(getCacheItem(infoPlaceCardId).type)}
-              image={getImageUrl(
-                getCacheItem(infoPlaceCardId).photoUrlReference,
-                150,
-                130,
-              )}
-              name={getCacheItem(infoPlaceCardId).name}
-            />
-          ) : (
+          {isAuth &&
+            isFavoriteDrawer &&
+            !isLoading &&
+            favoritePlaces &&
+            favoritePlaces.length > 0 &&
+            favoritePlaces.map((place: IPlaceProps) => (
+              <PlaceCard
+                description={
+                  <PlaceDescription
+                    address={place.address}
+                    raiting={place.rating}
+                    userRatingsTotal={place.userRatingsTotal}
+                  />
+                }
+                icon={getMarkerIcon(place.type)}
+                image={getImageUrl(place.photoUrlReference, 150, 130)}
+                key={place.placeId}
+                name={place.name}
+                onDelete={handleRemoveFavorite(place.placeId)}
+              />
+            ))}
+          {isAuth &&
+            isFavoriteDrawer &&
+            !isLoading &&
+            favoritePlaces &&
+            favoritePlaces.length === 0 && (
+              <span
+                className={isFavoriteDrawer ? styles.showText : styles.hideText}
+              >
+                Вы еще не добавили места в список избранных
+              </span>
+            )}
+          {!isAuth && isFavoriteDrawer && !isLoading && (
             <span
               className={isFavoriteDrawer ? styles.showText : styles.hideText}
             >
-              Чтобы сохронять и просматривать список избранного необходимо
+              Чтобы сохранять и просматривать список избранного, необходимо
               авторизоваться
             </span>
           )}
