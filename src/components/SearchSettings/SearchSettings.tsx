@@ -67,6 +67,7 @@ const SearchSettings = () => {
   };
 
   const handleSearchButtonClick = async () => {
+    setError("");
     await fetchData();
   };
 

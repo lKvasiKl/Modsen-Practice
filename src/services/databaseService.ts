@@ -19,7 +19,7 @@ const addPlaceInfo = async (
     const collectionRef = collection(db, userEmail);
     await setDoc(doc(collectionRef), placeInfo);
   } catch (e) {
-    console.error("Ошибка при добавлении документа: ", e);
+    console.error("Error adding item: ", e);
     return null;
   }
 };

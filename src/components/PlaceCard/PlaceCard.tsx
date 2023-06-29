@@ -1,6 +1,7 @@
 import { Button, Card, IconButton } from "@mui/material";
 import { getFirestore } from "firebase/firestore";
 import Cookies from "js-cookie";
+import { useState } from "react";
 
 import { addPlaceInfo, deleteItem } from "services/databaseService";
 
@@ -22,13 +23,16 @@ const PlaceCard = ({
   name,
   description,
   onDelete,
-  onGetMoreInfo,
+  onMoreInfo,
 }: IPlaceCardProps) => {
+  const [error, setError] = useState<string>("");
   const { infoPlaceCardId } = useDrawer();
   const { position, directions, isSaved, setDirections, setIsSaved } =
     useMapData();
 
   const handleDirectionButtonClick = () => {
+    setError("");
+
     if (!position) return;
 
     const service = new google.maps.DirectionsService();
@@ -64,96 +68,103 @@ const PlaceCard = ({
         setIsSaved(true);
       }
     } else {
-      console.error("Email не найден");
+      setError(
+        "Необходимо авторизоваться в приложении, чтобы иметь возможность добавлять места в избранное.",
+      );
     }
   };
 
   return (
-    <Card className={styles.card}>
-      {type ? (
-        <>
-          <img
-            alt="placePhoto"
-            className={styles.image}
-            height="300px"
-            src={image}
-            width="400px"
-          />
-          <img
-            alt="placeIcon"
-            className={styles.icon}
-            height="30px"
-            src={icon}
-            width="30px"
-          />
-          <span className={styles.placeName}>{name}</span>
-        </>
-      ) : (
-        <div className={styles.container}>
-          <div className={styles.imageContainer}>
+    <>
+      <Card className={styles.card}>
+        {type ? (
+          <>
             <img
               alt="placePhoto"
               className={styles.image}
-              height="130px"
+              height="300px"
               src={image}
-              width="150px"
+              width="400px"
             />
             <img
               alt="placeIcon"
               className={styles.icon}
-              height="25px"
+              height="30px"
               src={icon}
-              width="25px"
+              width="30px"
             />
-          </div>
-          <span className={styles.placeName}>{name}</span>
-        </div>
-      )}
-      <div
-        className={type ? styles.placeFullDescription : styles.placeDescription}
-      >
-        {description}
-      </div>
-      <div
-        className={type ? styles.buttonInfoContainer : styles.buttonContainer}
-      >
-        {type ? (
-          <>
-            <Button
-              className={
-                isSaved ? styles.savedButton : styles.savedActiveButton
-              }
-              onClick={handleSaveButtonClick}
-            >
-              <FavoriteIcon
-                className={isSaved ? styles.icon : styles.iconActive}
-              />
-              {isSaved ? "Сохранено" : "Сохранить"}
-            </Button>
-            <Button
-              className={
-                directions ? styles.routeButton : styles.routeActiveButton
-              }
-              onClick={handleDirectionButtonClick}
-            >
-              <PointIcon
-                className={directions ? styles.icon : styles.iconActive}
-              />
-              {directions ? "Сбросить" : "Маршрут"}
-            </Button>
+            <span className={styles.placeName}>{name}</span>
           </>
         ) : (
-          <>
-            <IconButton onClick={onDelete}>
-              <FavoriteIcon className={styles.svgFavorite} />
-            </IconButton>
-            <IconButton onClick={onGetMoreInfo}>
-              <ArrowRIcon className={styles.svgArrow} />
-            </IconButton>
-          </>
+          <div className={styles.container}>
+            <div className={styles.imageContainer}>
+              <img
+                alt="placePhoto"
+                className={styles.image}
+                height="130px"
+                src={image}
+                width="150px"
+              />
+              <img
+                alt="placeIcon"
+                className={styles.icon}
+                height="25px"
+                src={icon}
+                width="25px"
+              />
+            </div>
+            <span className={styles.placeName}>{name}</span>
+          </div>
         )}
-      </div>
-    </Card>
+        <div
+          className={
+            type ? styles.placeFullDescription : styles.placeDescription
+          }
+        >
+          {description}
+        </div>
+        <div
+          className={type ? styles.buttonInfoContainer : styles.buttonContainer}
+        >
+          {type ? (
+            <>
+              <Button
+                className={
+                  isSaved ? styles.savedButton : styles.savedActiveButton
+                }
+                onClick={handleSaveButtonClick}
+              >
+                <FavoriteIcon
+                  className={isSaved ? styles.icon : styles.iconActive}
+                />
+                {isSaved ? "Сохранено" : "Сохранить"}
+              </Button>
+              <Button
+                className={
+                  directions ? styles.routeButton : styles.routeActiveButton
+                }
+                onClick={handleDirectionButtonClick}
+              >
+                <PointIcon
+                  className={directions ? styles.icon : styles.iconActive}
+                />
+                {directions ? "Сбросить" : "Маршрут"}
+              </Button>
+            </>
+          ) : (
+            <>
+              <IconButton onClick={onDelete}>
+                <FavoriteIcon className={styles.svgFavorite} />
+              </IconButton>
+              <IconButton onClick={onMoreInfo}>
+                <ArrowRIcon className={styles.svgArrow} />
+              </IconButton>
+            </>
+          )}
+        </div>
+      </Card>
+      {error && <span className={styles.error}>{error}</span>}
+    </>
   );
 };
 

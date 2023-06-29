@@ -21,7 +21,7 @@ export interface IPlaceCardProps {
   name: string;
   description: React.ReactNode;
   onDelete?: () => void;
-  onGetMoreInfo?: () => void;
+  onMoreInfo?: () => void;
 }
 
 export interface IAuthProps {

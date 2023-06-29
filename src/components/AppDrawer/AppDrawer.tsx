@@ -1,7 +1,11 @@
 import { getFirestore } from "firebase/firestore";
 import Cookies from "js-cookie";
 
-import { deleteItem, getCollection } from "services/databaseService";
+import {
+  deleteItem,
+  getCollection,
+  isPlaceSaved,
+} from "services/databaseService";
 
 import PlaceCard from "components/PlaceCard/PlaceCard";
 import RouteCard from "components/RouteCard/RouteCard";
@@ -15,7 +19,7 @@ import { useDrawer } from "hooks/useDrawer";
 import { useMapData } from "hooks/useMapData";
 
 import getMarkerIcon from "helpers/iconMapper";
-import { getCacheItem } from "helpers/cache";
+import { getCacheItem, setCacheItem } from "helpers/cache";
 import { getImageUrl } from "helpers/imageUrlConstructor";
 
 import { ArrowLIcon, ArrowRIcon } from "assets/icons";
@@ -45,9 +49,11 @@ const AppDrawer = () => {
     setSerchDrawer,
     setFavoriteDrawer,
     setLoading,
+    setInfoPlaceCardId,
   } = useDrawer();
 
-  const { directions, favoritePlaces, setFavoritePlaces } = useMapData();
+  const { directions, favoritePlaces, setFavoritePlaces, setIsSaved } =
+    useMapData();
 
   const handleOpen = () => {
     setOpen((prevState) => !prevState);
@@ -72,6 +78,24 @@ const AppDrawer = () => {
     }
   };
 
+  const handlePlaceInfo = (placeId: string) => async () => {
+    const db = getFirestore();
+    const email = Cookies.get("email");
+
+    if (email) {
+      setIsSaved(await isPlaceSaved(db, email, placeId));
+    } else {
+      console.error("Email не найден");
+    }
+
+    await setCacheItem("placesCache", placeId);
+
+    setOpen(true);
+    setInfoPlaceCardId(placeId);
+    isSearchDrawer && setSerchDrawer(false);
+    isFavoriteDrawer && setFavoriteDrawer(false);
+  };
+
   return (
     <div className={`${styles.container}`}>
       <StyledBox className={isOpen ? styles.open : styles.containerClosed}>
@@ -80,7 +104,7 @@ const AppDrawer = () => {
           {isSearchDrawer && "Искать:"}
           {isFavoriteDrawer && "Избранное:"}
         </span>
-        {isLoading && isFavoriteDrawer && isOpen && <PinLoader />}
+        {isAuth && isLoading && isFavoriteDrawer && isOpen && <PinLoader />}
         {directions && (
           <RouteCard
             distance={directions.routes[0].legs[0].distance?.text}
@@ -107,6 +131,7 @@ const AppDrawer = () => {
                 key={place.placeId}
                 name={place.name}
                 onDelete={handleRemoveFavorite(place.placeId)}
+                onMoreInfo={handlePlaceInfo(place.placeId)}
               />
             ))}
           {isAuth &&
@@ -120,7 +145,7 @@ const AppDrawer = () => {
                 Вы еще не добавили места в список избранных
               </span>
             )}
-          {!isAuth && isFavoriteDrawer && !isLoading && (
+          {!isAuth && isFavoriteDrawer && isLoading && (
             <span
               className={isFavoriteDrawer ? styles.showText : styles.hideText}
             >
