@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react";
+import Cookies from "js-cookie";
 
 import { IAuthProps, IProviderProps } from "shared/interface/interface";
 
@@ -42,6 +43,7 @@ const AuthProvider = ({ children }: IProviderProps) => {
   const logout = () => {
     setAuth(false);
     removeSessionFromCookie("accessToken");
+    Cookies.remove("email");
   };
 
   const value = {

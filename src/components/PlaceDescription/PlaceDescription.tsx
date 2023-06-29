@@ -53,7 +53,7 @@ const PlaceDescription = ({
         </div>
       )}
       {isOpen && (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${styles.scheduleContainer}`}>
           <AccessTimeIcon className={styles.icon} />
           {isOpen ? (
             <span className={styles.open}>Открыто</span>

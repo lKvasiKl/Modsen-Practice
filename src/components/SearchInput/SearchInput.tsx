@@ -1,7 +1,12 @@
 import { InputBase, List, ListItemButton, ListItemText } from "@mui/material";
 import usePlacesAutocomplete from "use-places-autocomplete";
+import { getFirestore } from "firebase/firestore";
+import Cookies from "js-cookie";
+
+import { isPlaceSaved } from "services/databaseService";
 
 import { useDrawer } from "hooks/useDrawer";
+import { useMapData } from "hooks/useMapData";
 
 import { setCacheItem } from "helpers/cache";
 
@@ -31,6 +36,8 @@ const SearchInput = ({ placeholder }: ISearchImputProps) => {
     setInfoPlaceCardId,
   } = useDrawer();
 
+  const { setIsSaved } = useMapData();
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -40,6 +47,15 @@ const SearchInput = ({ placeholder }: ISearchImputProps) => {
   };
 
   const handleListItemClick = (placeId: string) => async () => {
+    const db = getFirestore();
+    const email = Cookies.get("email");
+
+    if (email) {
+      setIsSaved(await isPlaceSaved(db, email, placeId));
+    } else {
+      console.error("Email не найден");
+    }
+
     await setCacheItem("placesCache", placeId);
 
     setOpen(true);

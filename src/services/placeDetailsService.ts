@@ -18,6 +18,7 @@ const getPlaceDetail = async (place_id: string) => {
   const data = await request(options);
 
   return {
+    placeId: place_id,
     position: data.result.geometry.location,
     photoUrlReference: data.result.photos?.[0].photo_reference,
     type: data.result.types[0],
