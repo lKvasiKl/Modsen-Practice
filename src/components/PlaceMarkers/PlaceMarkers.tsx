@@ -3,6 +3,7 @@ import { Marker } from "@react-google-maps/api";
 import { TGooglePlace } from "shared/types/types";
 
 import { useDrawer } from "hooks/useDrawer";
+import { useMapData } from "hooks/useMapData";
 
 import getMarkerIcon from "helpers/iconMapper";
 import { setCacheItem } from "helpers/cache";
@@ -22,7 +23,10 @@ const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
     setInfoPlaceCardId,
   } = useDrawer();
 
+  const { setDirections } = useMapData();
+
   const handleMarkerClick = (placeId: string) => async () => {
+    setDirections(undefined);
     await setCacheItem("placesCache", placeId);
 
     setOpen(true);

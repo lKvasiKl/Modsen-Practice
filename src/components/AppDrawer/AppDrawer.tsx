@@ -7,6 +7,7 @@ import SearchInput from "components/SearchInput/SearchInput";
 
 import { useAuth } from "hooks/useAuth";
 import { useDrawer } from "hooks/useDrawer";
+import { useMapData } from "hooks/useMapData";
 
 import getMarkerIcon from "helpers/iconMapper";
 import { getCacheItem } from "helpers/cache";
@@ -29,6 +30,8 @@ const AppDrawer = () => {
     setFavoriteDrawer,
   } = useDrawer();
 
+  const { directions } = useMapData();
+
   const handleOpen = () => {
     setOpen((prevState) => !prevState);
     isSearchDrawer && setSerchDrawer((prevState) => !prevState);
@@ -43,6 +46,12 @@ const AppDrawer = () => {
           {isSearchDrawer && "Искать:"}
           {isFavoriteDrawer && "Избранное:"}
         </span>
+        {directions && (
+          <RouteCard
+            distance={directions.routes[0].legs[0].distance?.text}
+            time={directions.routes[0].legs[0].duration?.text}
+          />
+        )}
         <div className={styles.contentContainer}>
           {isAuth && isFavoriteDrawer ? (
             //TODO: Get and mup fav places from firebase store
@@ -96,7 +105,6 @@ const AppDrawer = () => {
               type="info"
             />
           )}
-          {/* <RouteCard distance="1,1" time="40" /> */}
           {isSearchDrawer && <SearchSettings />}
         </div>
       </StyledBox>
