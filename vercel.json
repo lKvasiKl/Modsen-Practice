@@ -1,0 +1,23 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/places/:path*",
+      "destination": "https://maps.googleapis.com/maps/api/place/nearbysearch/json:path*"
+    },
+    {
+      "source": "/api/placeDetails/:path*",
+      "destination": "https://maps.googleapis.com/maps/api/place/details/json:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}
