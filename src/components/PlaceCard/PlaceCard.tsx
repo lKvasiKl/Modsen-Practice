@@ -1,4 +1,8 @@
 import { Button, Card, IconButton } from "@mui/material";
+import { getFirestore } from "firebase/firestore";
+import Cookies from "js-cookie";
+
+import { addPlaceInfo, deleteItem } from "services/databaseService";
 
 import { IPlaceCardProps } from "shared/interface/interface";
 
@@ -18,7 +22,7 @@ const PlaceCard = ({
   name,
   description,
 }: IPlaceCardProps) => {
-  const { position, setDirections } = useMapData();
+  const { position, isSaved, setDirections, setIsSaved } = useMapData();
   const { infoPlaceCardId } = useDrawer();
 
   const handleDirectionButtonClick = () => {
@@ -37,6 +41,24 @@ const PlaceCard = ({
         }
       },
     );
+  };
+
+  const handleSaveButtonClick = async () => {
+    const db = getFirestore();
+    const email = Cookies.get("email");
+
+    if (!email) {
+      console.error("Email не найден");
+      return;
+    }
+
+    if (isSaved) {
+      await deleteItem(db, email, infoPlaceCardId);
+      setIsSaved(false);
+    } else {
+      await addPlaceInfo(db, email, getCacheItem(infoPlaceCardId));
+      setIsSaved(true);
+    }
   };
 
   return (
@@ -90,9 +112,12 @@ const PlaceCard = ({
       >
         {type ? (
           <>
-            <Button className={styles.savedButton}>
+            <Button
+              className={isSaved ? styles.savedButton : styles.saveButton}
+              onClick={handleSaveButtonClick}
+            >
               <FavoriteIcon className={styles.icon} />
-              Сохранено
+              {isSaved ? "Сохранено" : "Сохранить"}
             </Button>
             <Button
               className={styles.routeButton}

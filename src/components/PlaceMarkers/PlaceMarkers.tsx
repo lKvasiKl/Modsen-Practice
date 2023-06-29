@@ -1,4 +1,8 @@
 import { Marker } from "@react-google-maps/api";
+import Cookies from "js-cookie";
+import { getFirestore } from "firebase/firestore";
+
+import { isPlaceSaved } from "services/databaseService";
 
 import { TGooglePlace } from "shared/types/types";
 
@@ -23,9 +27,18 @@ const PlaceMarkers = ({ places }: IPlaceMarkersProps) => {
     setInfoPlaceCardId,
   } = useDrawer();
 
-  const { setDirections } = useMapData();
+  const { setDirections, setIsSaved } = useMapData();
 
   const handleMarkerClick = (placeId: string) => async () => {
+    const db = getFirestore();
+    const email = Cookies.get("email");
+
+    if (!email) {
+      console.error("Email не найден");
+    } else {
+      setIsSaved(await isPlaceSaved(db, email, placeId));
+    }
+
     setDirections(undefined);
     await setCacheItem("placesCache", placeId);
 

@@ -15,6 +15,7 @@ export const MapDataContext = createContext<{
   places: TGooglePlace[];
   pageToken: string | undefined;
   directions: TDirectionResult | undefined;
+  isSaved: boolean;
   setPosition: React.Dispatch<React.SetStateAction<TLatLngLiterals>>;
   setPlaces: React.Dispatch<React.SetStateAction<TGooglePlace[]>>;
   setPageToken: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -22,6 +23,7 @@ export const MapDataContext = createContext<{
   setDirections: React.Dispatch<
     React.SetStateAction<TDirectionResult | undefined>
   >;
+  setIsSaved: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   position: {
     lat: DEFAULT_LAT,
@@ -31,11 +33,13 @@ export const MapDataContext = createContext<{
   places: [],
   pageToken: undefined,
   directions: undefined,
+  isSaved: false,
   setPosition: () => undefined,
   setPlaces: () => undefined,
   setPageToken: () => undefined,
   setRadius: () => undefined,
   setDirections: () => undefined,
+  setIsSaved: () => undefined,
 });
 
 const MapDataProvider = ({ children }: IProviderProps) => {
@@ -49,6 +53,7 @@ const MapDataProvider = ({ children }: IProviderProps) => {
   const [directions, setDirections] = useState<TDirectionResult | undefined>(
     undefined,
   );
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const value = {
     radius,
@@ -56,11 +61,13 @@ const MapDataProvider = ({ children }: IProviderProps) => {
     places,
     pageToken,
     directions,
+    isSaved,
     setPosition,
     setPlaces,
     setPageToken,
     setRadius,
     setDirections,
+    setIsSaved,
   };
 
   return (

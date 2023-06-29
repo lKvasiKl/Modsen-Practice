@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   height: fit-content;
-  width: 100%;
   border-radius: 10px;
   border: 3px solid $light-gray;
 
@@ -151,6 +150,7 @@
     padding: 0 30px;
     margin-bottom: 35px;
 
+    .saveButton,
     .savedButton,
     .routeButton {
       width: 150px;
@@ -166,6 +166,22 @@
       }
     }
 
+    .saveButton {
+      border: 3px solid $red;
+      background-color: $red;
+      color: $white;
+
+      &:hover {
+        background-color: transparent;
+        border: 3px solid $red;
+        color: $red;
+
+        path {
+          fill: $red;
+        }
+      }
+    }
+
     .savedButton {
       border: 3px solid $light-gray;
       color: $dark-gray;
@@ -176,22 +192,23 @@
 
         .icon {
           & path {
-            fill: $red;
+            fill: $dark-gray;
           }
-        }
-      }
-
-      .icon {
-        width: 15px;
-        padding: 0;
-
-        & path {
-          fill: $dark-gray;
         }
       }
     }
 
+    .icon {
+      width: 15px;
+      padding: 0;
+
+      & path {
+        fill: $dark-gray;
+      }
+    }
+
     .routeButton {
+      border: 3px solid $blue;
       background-color: $blue;
       color: $white;
 
